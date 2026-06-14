@@ -4,7 +4,7 @@ using Game.Modding;
 using Game.SceneFlow;
 using Colossal.IO.AssetDatabase;
 using PriceAdjuster.Components;
-using PriceAdjuster.Systems;
+using PriceAdjuster.Systems.UI;
 using Unity.Collections;
 using Unity.Entities;
 
@@ -47,7 +47,7 @@ namespace PriceAdjuster
             
             AssetDatabase.global.LoadSettings(nameof(PriceAdjuster), Settings, new Settings(this));
             
-            updateSystem.UpdateAt<PlaceableNetPricingSystem>(SystemUpdatePhase.Modification1);
+            updateSystem.UpdateAt<UIPlaceableNetPricingSystem>(SystemUpdatePhase.Modification1);
         }
 
         public void OnDispose()
