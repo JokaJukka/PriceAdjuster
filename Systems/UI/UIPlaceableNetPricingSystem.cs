@@ -22,7 +22,7 @@ namespace PriceAdjuster.Systems.UI
             _initialQuery = GetEntityQuery(new EntityQueryDesc
             {
                 All = new[] { ComponentType.ReadWrite<PlaceableNetData>() },
-                None = new[] { ComponentType.ReadOnly<NetPriceAdjusted>() }
+                None = new[] { ComponentType.ReadOnly<OriginalPlacableNetData>() }
             });
 
             _recalcQuery = GetEntityQuery(new EntityQueryDesc
@@ -52,7 +52,7 @@ namespace PriceAdjuster.Systems.UI
             for (var i = 0; i < entitiesData.Length; i++)
             {
                 var entityData = entitiesData[i];
-                var originalPrices = new NetPriceAdjusted(entityData.m_DefaultConstructionCost, entityData.m_DefaultUpkeepCost);
+                var originalPrices = new OriginalPlacableNetData(entityData.m_DefaultConstructionCost, entityData.m_DefaultUpkeepCost);
                 entityData = UpdatePrices(entitiesData[i], originalPrices);
 
                 EntityManager.AddComponentData(entities[i], originalPrices);
@@ -67,7 +67,7 @@ namespace PriceAdjuster.Systems.UI
         {
             var entities = _recalcQuery.ToEntityArray(Allocator.Temp);
             var entitiesData = _recalcQuery.ToComponentDataArray<PlaceableNetData>(Allocator.Temp);
-            var entitiesOriginalPrices = _recalcQuery.ToComponentDataArray<NetPriceAdjusted>(Allocator.Temp);
+            var entitiesOriginalPrices = _recalcQuery.ToComponentDataArray<OriginalPlacableNetData>(Allocator.Temp);
 
             for (var i = 0; i < entitiesData.Length; i++)
             {
@@ -82,14 +82,14 @@ namespace PriceAdjuster.Systems.UI
             
         }
 
-        private PlaceableNetData UpdatePrices(PlaceableNetData entityData, NetPriceAdjusted originalValues)
+        private PlaceableNetData UpdatePrices(PlaceableNetData entityData, OriginalPlacableNetData originalPlacableValues)
         {
-            var newPrice = originalValues.OriginalPrice * Mod.Settings.RoadPricePercentageSlider / 100;
-            Mod.log.Info($"Modifying price from {originalValues.OriginalPrice} to {newPrice}");
+            var newPrice = originalPlacableValues.OriginalPrice * Mod.Settings.RoadPricePercentageSlider / 100;
+            Mod.log.Info($"Modifying price from {originalPlacableValues.OriginalPrice} to {newPrice}");
             entityData.m_DefaultConstructionCost = MathUtils.ClampToUInt(newPrice);
             
-            var newUpkeep = originalValues.OriginalUpkeep * Mod.Settings.RoadUpkeepPercentageSlider / 100;
-            Mod.log.Info($"Modifying price from {originalValues.OriginalUpkeep} to {newUpkeep}");
+            var newUpkeep = originalPlacableValues.OriginalUpkeep * Mod.Settings.RoadUpkeepPercentageSlider / 100;
+            Mod.log.Info($"Modifying price from {originalPlacableValues.OriginalUpkeep} to {newUpkeep}");
             entityData.m_DefaultUpkeepCost = newUpkeep;
 
             return entityData;

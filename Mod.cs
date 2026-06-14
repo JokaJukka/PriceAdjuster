@@ -21,7 +21,7 @@ namespace PriceAdjuster
 
         public static void SchedulePriceRecalculation()
         {
-            var query = _entityManager.CreateEntityQuery(ComponentType.ReadOnly<NetPriceAdjusted>());
+            var query = _entityManager.CreateEntityQuery(ComponentType.ReadOnly<OriginalPlacableNetData>());
             var entities = query.ToEntityArray(Allocator.Temp);
             
             foreach (var entity in entities)

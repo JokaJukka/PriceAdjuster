@@ -77,4 +77,8 @@
             <Private>false</Private>
         </Reference>
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Systems\Logic\" />
+    </ItemGroup>
 </Project>
