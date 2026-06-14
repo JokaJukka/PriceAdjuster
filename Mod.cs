@@ -25,6 +25,8 @@ namespace PriceAdjuster
             var query = _entityManager.CreateEntityQuery(ComponentType.ReadOnly<OriginalPlacableNetProps>());
             var entities = query.ToEntityArray(Allocator.Temp);
             
+            log.Info($"Scheduling price recalculation for ${entities.Length} entities!");
+            
             foreach (var entity in entities)
             {
                 _entityManager.AddComponent<ScheduledPriceRecalculation>(entity);

@@ -85,12 +85,13 @@ namespace PriceAdjuster.Systems.UI
         private PlaceableNetData UpdatePrices(PlaceableNetData entityData, OriginalPlacableNetProps originalPlacableValues)
         {
             var newPrice = originalPlacableValues.OriginalPrice * Mod.Settings.RoadPricePercentageSlider / 100;
-            Mod.log.Info($"Modifying price from {originalPlacableValues.OriginalPrice} to {newPrice}");
             entityData.m_DefaultConstructionCost = MathUtils.ClampToUInt(newPrice);
             
             var newUpkeep = originalPlacableValues.OriginalUpkeep * Mod.Settings.RoadUpkeepPercentageSlider / 100;
-            Mod.log.Info($"Modifying price from {originalPlacableValues.OriginalUpkeep} to {newUpkeep}");
             entityData.m_DefaultUpkeepCost = newUpkeep;
+            
+            Mod.log.Debug(
+                $"Price: {originalPlacableValues.OriginalPrice} -> {newPrice}; Upkeep: {originalPlacableValues.OriginalUpkeep} -> {newUpkeep}");
 
             return entityData;
         }
