@@ -4,6 +4,7 @@ using Game.Modding;
 using Game.SceneFlow;
 using Colossal.IO.AssetDatabase;
 using PriceAdjuster.Components;
+using PriceAdjuster.Systems.Logic;
 using PriceAdjuster.Systems.UI;
 using Unity.Collections;
 using Unity.Entities;
@@ -21,7 +22,7 @@ namespace PriceAdjuster
 
         public static void SchedulePriceRecalculation()
         {
-            var query = _entityManager.CreateEntityQuery(ComponentType.ReadOnly<OriginalPlacableNetData>());
+            var query = _entityManager.CreateEntityQuery(ComponentType.ReadOnly<OriginalPlacableNetProps>());
             var entities = query.ToEntityArray(Allocator.Temp);
             
             foreach (var entity in entities)
@@ -47,6 +48,7 @@ namespace PriceAdjuster
             
             AssetDatabase.global.LoadSettings(nameof(PriceAdjuster), Settings, new Settings(this));
             
+            updateSystem.UpdateAt<PlaceableNetPricingSystem>(SystemUpdatePhase.Modification1);
             updateSystem.UpdateAt<UIPlaceableNetPricingSystem>(SystemUpdatePhase.Modification1);
         }
 
