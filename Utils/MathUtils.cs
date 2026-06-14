@@ -4,7 +4,7 @@ namespace PriceAdjuster.Utils
 {
     public class MathUtils
     {
-        public static uint ClampToUInt(long value)
+        public static uint ClampToUInt(float value)
         {
             switch (value)
             {

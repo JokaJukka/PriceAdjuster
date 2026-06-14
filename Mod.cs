@@ -50,8 +50,8 @@ namespace PriceAdjuster
             
             AssetDatabase.global.LoadSettings(nameof(PriceAdjuster), Settings, new Settings(this));
             
-            updateSystem.UpdateAt<PlaceableNetPricingSystem>(SystemUpdatePhase.Modification1);
-            updateSystem.UpdateAt<UIPlaceableNetPricingSystem>(SystemUpdatePhase.Modification1);
+            updateSystem.UpdateAt<AbstractNetPricingSystem>(SystemUpdatePhase.Modification1);
+            updateSystem.UpdateAt<AbstractUINetPricingSystem>(SystemUpdatePhase.Modification1);
         }
 
         public void OnDispose()

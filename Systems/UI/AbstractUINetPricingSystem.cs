@@ -5,38 +5,20 @@ using PriceAdjuster.Utils;
 using Unity.Collections;
 using Unity.Entities;
 
-namespace PriceAdjuster.Systems.Logic
+namespace PriceAdjuster.Systems.UI
 {
     /// <summary>
-    /// This class modifies the pricing of existing & to-be created networks.
+    /// This class modifies just the pricing of networks in UI.
     /// </summary>
-    public partial class PlaceableNetPricingSystem : GameSystemBase
+    public abstract partial class AbstractUINetPricingSystem : GameSystemBase
     {
-        private EntityQuery _initialQuery;
-        private EntityQuery _recalcQuery;
+        protected EntityQuery InitialQuery;
+        protected EntityQuery RecalcQuery;
 
-        protected override void OnCreate()
-        {
-            base.OnCreate();
+        protected abstract float PriceCoefficient();
 
-            _initialQuery = GetEntityQuery(new EntityQueryDesc
-            {
-                All = new[] { ComponentType.ReadWrite<PlaceableNetComposition>() },
-                None = new[] { ComponentType.ReadOnly<OriginalPlacableNetProps>() }
-            });
+        protected abstract float UpkeepCoefficient();
 
-            _recalcQuery = GetEntityQuery(new EntityQueryDesc
-            {
-                All = new[]
-                {
-                    ComponentType.ReadWrite<PlaceableNetComposition>(),
-                    ComponentType.ReadWrite<ScheduledPriceRecalculation>()
-                },
-            });
-
-
-            RequireAnyForUpdate(_initialQuery, _recalcQuery);
-        }
 
         protected override void OnUpdate()
         {
@@ -46,14 +28,14 @@ namespace PriceAdjuster.Systems.Logic
 
         private void InitializeNewPrices()
         {
-            var entities = _initialQuery.ToEntityArray(Allocator.Temp);
-            var entitiesData = _initialQuery.ToComponentDataArray<PlaceableNetComposition>(Allocator.Temp);
+            var entities = InitialQuery.ToEntityArray(Allocator.Temp);
+            var entitiesData = InitialQuery.ToComponentDataArray<PlaceableNetData>(Allocator.Temp);
 
             for (var i = 0; i < entitiesData.Length; i++)
             {
                 var entityData = entitiesData[i];
-                var originalPrices =
-                    new OriginalPlacableNetProps(entityData.m_ConstructionCost, entityData.m_UpkeepCost);
+                var originalPrices = new OriginalPlacableNetProps(entityData.m_DefaultConstructionCost,
+                    entityData.m_DefaultUpkeepCost);
                 entityData = UpdatePrices(entitiesData[i], originalPrices);
 
                 EntityManager.AddComponentData(entities[i], originalPrices);
@@ -66,9 +48,9 @@ namespace PriceAdjuster.Systems.Logic
 
         private void RecalculatePrices()
         {
-            var entities = _recalcQuery.ToEntityArray(Allocator.Temp);
-            var entitiesData = _recalcQuery.ToComponentDataArray<PlaceableNetComposition>(Allocator.Temp);
-            var entitiesOriginalPrices = _recalcQuery.ToComponentDataArray<OriginalPlacableNetProps>(Allocator.Temp);
+            var entities = RecalcQuery.ToEntityArray(Allocator.Temp);
+            var entitiesData = RecalcQuery.ToComponentDataArray<PlaceableNetData>(Allocator.Temp);
+            var entitiesOriginalPrices = RecalcQuery.ToComponentDataArray<OriginalPlacableNetProps>(Allocator.Temp);
 
             for (var i = 0; i < entitiesData.Length; i++)
             {
@@ -82,15 +64,15 @@ namespace PriceAdjuster.Systems.Logic
             entitiesData.Dispose();
         }
 
-        private PlaceableNetComposition UpdatePrices(PlaceableNetComposition entityData,
+        private PlaceableNetData UpdatePrices(PlaceableNetData entityData,
             OriginalPlacableNetProps originalPlacableValues)
         {
             var newPrice = originalPlacableValues.OriginalPrice * Mod.Settings.RoadPricePercentageSlider / 100;
-            entityData.m_ConstructionCost = MathUtils.ClampToUInt(newPrice);
+            entityData.m_DefaultConstructionCost = MathUtils.ClampToUInt(newPrice);
 
             var newUpkeep = originalPlacableValues.OriginalUpkeep * Mod.Settings.RoadUpkeepPercentageSlider / 100;
-            entityData.m_UpkeepCost = newUpkeep;
-            
+            entityData.m_DefaultUpkeepCost = newUpkeep;
+
             Mod.log.Debug(
                 $"Price: {originalPlacableValues.OriginalPrice} -> {newPrice}; Upkeep: {originalPlacableValues.OriginalUpkeep} -> {newUpkeep}");
 
