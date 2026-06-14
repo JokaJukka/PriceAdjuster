@@ -3,6 +3,7 @@ using Game;
 using Game.Modding;
 using Game.SceneFlow;
 using Colossal.IO.AssetDatabase;
+using PriceAdjuster.Systems;
 
 namespace PriceAdjuster
 {
@@ -23,9 +24,10 @@ namespace PriceAdjuster
             _mSettings = new Settings(this);
             _mSettings.RegisterInOptionsUI();
             GameManager.instance.localizationManager.AddSource("en-US", new LocaleEN(_mSettings));
-
-
+            
             AssetDatabase.global.LoadSettings(nameof(PriceAdjuster), _mSettings, new Settings(this));
+            
+            updateSystem.UpdateAt<PlaceableNetPricingSystem>(SystemUpdatePhase.Modification1);
         }
 
         public void OnDispose()
