@@ -12,7 +12,7 @@ namespace PriceAdjuster
         public static ILog log = LogManager.GetLogger($"{nameof(PriceAdjuster)}.{nameof(Mod)}")
             .SetShowsErrorsInUI(false);
 
-        private Settings _mSettings;
+        public static Settings Settings { get; private set; }
 
         public void OnLoad(UpdateSystem updateSystem)
         {
@@ -21,11 +21,11 @@ namespace PriceAdjuster
             if (GameManager.instance.modManager.TryGetExecutableAsset(this, out var asset))
                 log.Info($"Current mod asset at {asset.path}");
 
-            _mSettings = new Settings(this);
-            _mSettings.RegisterInOptionsUI();
-            GameManager.instance.localizationManager.AddSource("en-US", new LocaleEN(_mSettings));
+            Settings = new Settings(this);
+            Settings.RegisterInOptionsUI();
+            GameManager.instance.localizationManager.AddSource("en-US", new LocaleEN(Settings));
             
-            AssetDatabase.global.LoadSettings(nameof(PriceAdjuster), _mSettings, new Settings(this));
+            AssetDatabase.global.LoadSettings(nameof(PriceAdjuster), Settings, new Settings(this));
             
             updateSystem.UpdateAt<PlaceableNetPricingSystem>(SystemUpdatePhase.Modification1);
         }
@@ -33,10 +33,10 @@ namespace PriceAdjuster
         public void OnDispose()
         {
             log.Info(nameof(OnDispose));
-            if (_mSettings != null)
+            if (Settings != null)
             {
-                _mSettings.UnregisterInOptionsUI();
-                _mSettings = null;
+                Settings.UnregisterInOptionsUI();
+                Settings = null;
             }
         }
     }
