@@ -9,25 +9,42 @@ namespace PriceAdjuster.Systems
 {
     public partial class PlaceableNetPricingSystem : GameSystemBase
     {
-        private EntityQuery _query;
+        private EntityQuery _initialQuery;
+        private EntityQuery _recalcQuery;
 
         protected override void OnCreate()
         {
             base.OnCreate();
 
-            _query = GetEntityQuery(new EntityQueryDesc
+            _initialQuery = GetEntityQuery(new EntityQueryDesc
             {
                 All = new[] { ComponentType.ReadWrite<PlaceableNetData>() },
                 None = new[] { ComponentType.ReadOnly<NetPriceAdjusted>() }
             });
 
-            RequireForUpdate(_query);
+            _recalcQuery = GetEntityQuery(new EntityQueryDesc
+            {
+                All = new[]
+                {
+                    ComponentType.ReadWrite<PlaceableNetData>(),
+                    ComponentType.ReadWrite<ScheduledPriceRecalculation>()
+                },
+            });
+
+
+            RequireAnyForUpdate(_initialQuery, _recalcQuery);
         }
 
         protected override void OnUpdate()
         {
-            var entities = _query.ToEntityArray(Allocator.Temp);
-            var roads = _query.ToComponentDataArray<PlaceableNetData>(Allocator.Temp);
+            InitializeNewPrices();
+            RecalculatePrices();
+        }
+
+        private void InitializeNewPrices()
+        {
+            var entities = _initialQuery.ToEntityArray(Allocator.Temp);
+            var roads = _initialQuery.ToComponentDataArray<PlaceableNetData>(Allocator.Temp);
 
             for (var i = 0; i < roads.Length; i++)
             {
@@ -51,10 +68,43 @@ namespace PriceAdjuster.Systems
                 EntityManager.AddComponentData(entities[i], new NetPriceAdjusted(oldPrice, oldUpkeep));
                 EntityManager.SetComponentData(entities[i], road);
             }
-
-            // _query.CopyFromComponentDataArray(roads);
+            
             entities.Dispose();
             roads.Dispose();
+        }
+
+        private void RecalculatePrices()
+        {
+            var entities = _recalcQuery.ToEntityArray(Allocator.Temp);
+            var roads = _recalcQuery.ToComponentDataArray<PlaceableNetData>(Allocator.Temp);
+            var originalData = _recalcQuery.ToComponentDataArray<NetPriceAdjusted>(Allocator.Temp);
+
+            for (var i = 0; i < roads.Length; i++)
+            {
+                var road = roads[i];
+                if (road.m_DefaultConstructionCost == 0)
+                {
+                    // Skip not-yet initialized ecs & zero-priced entities 
+                    continue;
+                }
+
+                var oldPrice = originalData[i].OriginalPrice;
+                var newPrice = oldPrice * Mod.Settings.RoadPricePercentageSlider / 100;
+                Mod.log.Info($"Modifying price of {road} from {oldPrice} to {newPrice}");
+                road.m_DefaultConstructionCost = ClampToUInt(newPrice);
+
+                var oldUpkeep = originalData[i].OriginalUpkeep;
+                var newUpkeep = oldUpkeep * Mod.Settings.RoadUpkeepPercentageSlider / 100;
+                Mod.log.Info($"Modifying price of {road} from {oldUpkeep} to {newUpkeep}");
+                road.m_DefaultUpkeepCost = newUpkeep;
+
+                EntityManager.RemoveComponent<ScheduledPriceRecalculation>(entities[i]);
+                EntityManager.SetComponentData(entities[i], road);
+            }
+            
+            entities.Dispose();
+            roads.Dispose();
+            
         }
 
         private uint ClampToUInt(long value)
