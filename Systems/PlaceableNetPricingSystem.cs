@@ -18,7 +18,7 @@ namespace PriceAdjuster.Systems
             _query = GetEntityQuery(new EntityQueryDesc
             {
                 All = new[] { ComponentType.ReadWrite<PlaceableNetData>() },
-                None = new[] { ComponentType.ReadOnly<PriceAdjusted>() }
+                None = new[] { ComponentType.ReadOnly<NetPriceAdjusted>() }
             });
 
             RequireForUpdate(_query);
@@ -48,7 +48,7 @@ namespace PriceAdjuster.Systems
                 Mod.log.Info($"Modifying price of {road} from {oldUpkeep} to {newUpkeep}");
                 road.m_DefaultUpkeepCost = newUpkeep;
 
-                EntityManager.AddComponentData(entities[i], new PriceAdjusted(oldPrice, oldUpkeep));
+                EntityManager.AddComponentData(entities[i], new NetPriceAdjusted(oldPrice, oldUpkeep));
                 EntityManager.SetComponentData(entities[i], road);
             }
 

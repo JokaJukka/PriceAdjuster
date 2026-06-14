@@ -8,13 +8,14 @@ using Game.UI;
 namespace PriceAdjuster
 {
     [FileLocation("ModsSettings/PriceAdjuster/PriceAdjuster")]
-    [SettingsUIGroupOrder(PresetGroup, RoadGroup)]
-    [SettingsUIShowGroupName(PresetGroup, RoadGroup)]
+    [SettingsUIGroupOrder(PresetGroup, RoadGroup, AdvancedGroup)]
+    [SettingsUIShowGroupName(PresetGroup, RoadGroup, AdvancedGroup)]
     public sealed class Settings : ModSetting
     {
         public const string MainTab = "Main";
         public const string PresetGroup = "Presets";
         public const string RoadGroup = "Roads";
+        public const string AdvancedGroup = "Advanced";
 
         public Settings(IMod mod) : base(mod)
         {
@@ -63,7 +64,11 @@ namespace PriceAdjuster
         public int RoadPricePercentageSlider
         {
             get => RoadPricePercentage;
-            set => RoadPricePercentage = value;
+            set
+            {
+                RoadPricePercentage = value;
+                Mod.SchedulePriceRecalculation();
+            }
         }
 
 
@@ -73,10 +78,29 @@ namespace PriceAdjuster
         public int RoadUpkeepPercentageSlider
         {
             get => RoadUpkeepPercentage;
-            set => RoadUpkeepPercentage = value;
+            set
+            {
+                RoadUpkeepPercentage = value;
+                Mod.SchedulePriceRecalculation();
+            }
         }
 
-        public bool isNotCustomPreset() => Preset != PresetsEnum.Custom;
+        [SettingsUISection(MainTab, AdvancedGroup)]
+        [SettingsUIButton]
+        [SettingsUIConfirmation(null, null)]
+        public bool ForceRecalculatePrices
+        {
+            get => false;
+            set
+            {
+                if (value)
+                {
+                    Mod.SchedulePriceRecalculation();
+                }
+            }
+        }
+
+        public bool IsNotCustomPreset() => Preset != PresetsEnum.Custom;
 
 
         public override void SetDefaults()

@@ -3,7 +3,10 @@ using Game;
 using Game.Modding;
 using Game.SceneFlow;
 using Colossal.IO.AssetDatabase;
+using PriceAdjuster.Components;
 using PriceAdjuster.Systems;
+using Unity.Collections;
+using Unity.Entities;
 
 namespace PriceAdjuster
 {
@@ -14,6 +17,21 @@ namespace PriceAdjuster
 
         public static Settings Settings { get; private set; }
 
+        private static EntityManager _entityManager;
+
+        public static void SchedulePriceRecalculation()
+        {
+            var query = _entityManager.CreateEntityQuery(ComponentType.ReadOnly<NetPriceAdjusted>());
+            var entities = query.ToEntityArray(Allocator.Temp);
+            
+            foreach (var entity in entities)
+            {
+                _entityManager.AddComponent<ScheduledPriceRecalculation>(entity);
+            }
+
+            entities.Dispose();
+        }
+
         public void OnLoad(UpdateSystem updateSystem)
         {
             log.Info(nameof(OnLoad));
@@ -21,6 +39,8 @@ namespace PriceAdjuster
             if (GameManager.instance.modManager.TryGetExecutableAsset(this, out var asset))
                 log.Info($"Current mod asset at {asset.path}");
 
+            _entityManager = updateSystem.EntityManager;
+            
             Settings = new Settings(this);
             Settings.RegisterInOptionsUI();
             GameManager.instance.localizationManager.AddSource("en-US", new LocaleEN(Settings));
