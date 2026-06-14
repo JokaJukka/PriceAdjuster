@@ -6,14 +6,17 @@ namespace PriceAdjuster.Systems.Logic
 {
     public partial class RoadPricingSystem : AbstractNetPricingSystem
     {
-        
         protected override void OnCreate()
         {
             base.OnCreate();
 
             InitialQuery = GetEntityQuery(new EntityQueryDesc
             {
-                All = new[] { ComponentType.ReadWrite<PlaceableNetComposition>() },
+                All = new[]
+                {
+                    ComponentType.ReadWrite<PlaceableNetComposition>(),
+                    ComponentType.ReadOnly<RoadComposition>()
+                },
                 None = new[] { ComponentType.ReadOnly<OriginalPlacableNetProps>() }
             });
 
@@ -22,6 +25,7 @@ namespace PriceAdjuster.Systems.Logic
                 All = new[]
                 {
                     ComponentType.ReadWrite<PlaceableNetComposition>(),
+                    ComponentType.ReadOnly<RoadComposition>(),
                     ComponentType.ReadWrite<ScheduledPriceRecalculation>()
                 },
             });
@@ -29,8 +33,8 @@ namespace PriceAdjuster.Systems.Logic
             RequireAnyForUpdate(InitialQuery, RecalcQuery);
         }
 
-        protected override float PriceCoefficient() => (float) Mod.Settings.RoadPricePercentageSlider / 100;
+        protected override float PriceCoefficient() => (float)Mod.Settings.RoadPricePercentageSlider / 100;
 
-        protected override float UpkeepCoefficient() => (float) Mod.Settings.RoadUpkeepPercentageSlider / 100;
+        protected override float UpkeepCoefficient() => (float)Mod.Settings.RoadUpkeepPercentageSlider / 100;
     }
 }

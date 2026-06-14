@@ -12,7 +12,11 @@ namespace PriceAdjuster.Systems.UI
 
             InitialQuery = GetEntityQuery(new EntityQueryDesc
             {
-                All = new[] { ComponentType.ReadWrite<PlaceableNetData>() },
+                All = new[]
+                {
+                    ComponentType.ReadWrite<PlaceableNetData>(),
+                    ComponentType.ReadOnly<RoadData>()
+                },
                 None = new[] { ComponentType.ReadOnly<OriginalPlacableNetProps>() }
             });
 
@@ -21,6 +25,7 @@ namespace PriceAdjuster.Systems.UI
                 All = new[]
                 {
                     ComponentType.ReadWrite<PlaceableNetData>(),
+                    ComponentType.ReadOnly<RoadData>(),
                     ComponentType.ReadWrite<ScheduledPriceRecalculation>()
                 },
             });
@@ -29,8 +34,8 @@ namespace PriceAdjuster.Systems.UI
             RequireAnyForUpdate(InitialQuery, RecalcQuery);
         }
 
-        protected override float PriceCoefficient() => (float) Mod.Settings.RoadPricePercentageSlider / 100;
+        protected override float PriceCoefficient() => (float)Mod.Settings.RoadPricePercentageSlider / 100;
 
-        protected override float UpkeepCoefficient() => (float) Mod.Settings.RoadUpkeepPercentageSlider / 100;
+        protected override float UpkeepCoefficient() => (float)Mod.Settings.RoadUpkeepPercentageSlider / 100;
     }
 }

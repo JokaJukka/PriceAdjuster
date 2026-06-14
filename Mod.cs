@@ -25,7 +25,7 @@ namespace PriceAdjuster
             var query = _entityManager.CreateEntityQuery(ComponentType.ReadOnly<OriginalPlacableNetProps>());
             var entities = query.ToEntityArray(Allocator.Temp);
             
-            log.Info($"Scheduling price recalculation for ${entities.Length} entities!");
+            log.Info($"Scheduling price recalculation for {entities.Length} entities!");
             
             foreach (var entity in entities)
             {
@@ -50,8 +50,8 @@ namespace PriceAdjuster
             
             AssetDatabase.global.LoadSettings(nameof(PriceAdjuster), Settings, new Settings(this));
             
-            updateSystem.UpdateAt<AbstractNetPricingSystem>(SystemUpdatePhase.Modification1);
-            updateSystem.UpdateAt<AbstractUINetPricingSystem>(SystemUpdatePhase.Modification1);
+            updateSystem.UpdateAt<RoadPricingSystem>(SystemUpdatePhase.Modification1);
+            updateSystem.UpdateAt<UIRoadPricingSystem>(SystemUpdatePhase.Modification1);
         }
 
         public void OnDispose()
