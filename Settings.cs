@@ -155,6 +155,14 @@ namespace PriceAdjuster
                     _mSettings.GetOptionDescLocaleID(nameof(Settings.RoadUpkeepPercentageSlider)),
                     "Sets the percentage of a price of maintaining roads. 100% equals to vanilla game settings."
                 },
+                {
+                    _mSettings.GetOptionLabelLocaleID(nameof(Settings.ForceRecalculatePrices)),
+                    "Force recalculate prices"
+                },
+                {
+                    _mSettings.GetOptionDescLocaleID(nameof(Settings.ForceRecalculatePrices)),
+                    "Forces the mod to recalculate all the modified prices; this shouldn't be necessary though."
+                },
             };
         }
 
