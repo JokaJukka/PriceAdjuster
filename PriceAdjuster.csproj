@@ -4,27 +4,22 @@
         <Configurations>Debug;Release</Configurations>
 
         <!--The file where mod information which is required for publishing mod on PDX mods are stored-->
-        <PublishConfigurationPath>Properties\PublishConfiguration.xml</PublishConfigurationPath>
-        <CSII_INSTALLATIONPATH>/home/jukka/.local/share/Steam/steamapps/common/Cities Skylines II</CSII_INSTALLATIONPATH>
-        <CSII_USERDATAPATH>/home/jukka/.steam/steam/steamapps/compatdata/949230/pfx/drive_c/users/steamuser/AppData/LocalLow/Colossal Order/Cities Skylines II</CSII_USERDATAPATH>
-        <CSII_TOOLPATH>/home/jukka/.steam/steam/steamapps/compatdata/949230/pfx/drive_c/users/steamuser/AppData/LocalLow/Colossal Order/Cities Skylines II/.cache/Modding</CSII_TOOLPATH>
-        <CSII_LOCALMODSPATH>/home/jukka/.steam/steam/steamapps/compatdata/949230/pfx/drive_c/users/steamuser/AppData/LocalLow/Colossal Order/Cities Skylines II/Mods</CSII_LOCALMODSPATH>
-        <CSII_UNITYMODPROJECTPATH>/home/jukka/.steam/steam/steamapps/compatdata/949230/pfx/drive_c/users/steamuser/AppData/LocalLow/Colossal Order/Cities Skylines II/.cache/Modding/UnityModsProject</CSII_UNITYMODPROJECTPATH>
-        <CSII_UNITYVERSION>2022.3.62f2</CSII_UNITYVERSION>
-        <CSII_ENTITIESVERSION>1.3.10</CSII_ENTITIESVERSION>
-        <CSII_MODPOSTPROCESSORPATH>/home/jukka/.local/share/Steam/steamapps/common/Cities Skylines II/Cities2_Data/Content/Game/.ModdingToolchain/ModPostProcessor/ModPostProcessor.dll</CSII_MODPOSTPROCESSORPATH>
-        <CSII_MODPUBLISHERPATH>/home/jukka/.local/share/Steam/steamapps/common/Cities Skylines II/Cities2_Data/Content/Game/.ModdingToolchain/ModPublisher/ModPublisher.exe</CSII_MODPUBLISHERPATH>
-        <CSII_PDXCACHEPATH>/home/jukka/.steam/steam/steamapps/compatdata/949230/pfx/drive_c/users/steamuser/AppData/LocalLow/Colossal Order/Cities Skylines II/.pdxsdk</CSII_PDXCACHEPATH>
-        <CSII_PDXMODSPATH>/home/jukka/.steam/steam/steamapps/compatdata/949230/pfx/drive_c/users/steamuser/AppData/LocalLow/Colossal Order/Cities Skylines II/.cache/Mods</CSII_PDXMODSPATH>
-        <CSII_PATHSET>Build</CSII_PATHSET>
-        <CSII_MANAGEDPATH>/home/jukka/.local/share/Steam/steamapps/common/Cities Skylines II/Cities2_Data/Managed</CSII_MANAGEDPATH>
-        <CSII_ASSEMBLYSEARCHPATH></CSII_ASSEMBLYSEARCHPATH>
-        <CSII_MSCORLIBPATH>/home/jukka/.local/share/Steam/steamapps/common/Cities Skylines II/Cities2_Data/Managed/mscorlib.dll</CSII_MSCORLIBPATH>
+        <PublishConfigurationPath>Properties/PublishConfiguration.xml</PublishConfigurationPath>
+        <TargetFramework>net48</TargetFramework>
     </PropertyGroup>
 
     <!--Imports must be after PropertyGroup block-->
     <Import Project="Mod.props"/>
     <Import Project="Mod.targets"/>
+
+    <Target Name="CustomModPostProcessorConfig" AfterTargets="ModPostProcessorConfig">
+        <ItemGroup>
+            <_ModPostProcessorRefs Include="@(ReferencePath)" Condition="!$([System.String]::Copy('%(Identity)').Contains('.nuget'))" />
+        </ItemGroup>
+        <PropertyGroup>
+            <ModPostProcessorArgs>"$(ModPostProcessorFullPath)" PostProcess "$(TargetPath)" -u "$(UnityModProjectFullPath)" @(_ModPostProcessorRefs->'-r "%(Identity)"', ' ') -p Windows -p macOS -p Linux -d -v</ModPostProcessorArgs>
+        </PropertyGroup>
+    </Target>
 
     <ItemGroup>
         <Reference Include="Game">
@@ -78,5 +73,9 @@
         <Reference Update="System.Data">
             <Private>false</Private>
         </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Systems\" />
     </ItemGroup>
 </Project>
