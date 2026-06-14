@@ -59,28 +59,24 @@ namespace PriceAdjuster
 
         [SettingsUISlider(min = 10, max = 1000, step = 5, scalarMultiplier = 1, unit = Unit.kPercentage)]
         [SettingsUISection(MainTab, RoadGroup)]
+        [SettingsUIDisableByCondition(typeof(Settings), "isNotCustomPreset")]
         public int RoadPricePercentageSlider
         {
             get => RoadPricePercentage;
-            set
-            {
-                RoadPricePercentage = value;
-                PresetsDropdown = PresetsEnum.Custom;
-            }
+            set => RoadPricePercentage = value;
         }
 
 
         [SettingsUISlider(min = 10, max = 1000, step = 5, scalarMultiplier = 1, unit = Unit.kPercentage)]
         [SettingsUISection(MainTab, RoadGroup)]
+        [SettingsUIDisableByCondition(typeof(Settings), "isNotCustomPreset")]
         public int RoadUpkeepPercentageSlider
         {
             get => RoadUpkeepPercentage;
-            set
-            {
-                RoadUpkeepPercentage = value;
-                PresetsDropdown = PresetsEnum.Custom;
-            }
+            set => RoadUpkeepPercentage = value;
         }
+
+        public bool isNotCustomPreset() => Preset != PresetsEnum.Custom;
 
 
         public override void SetDefaults()
