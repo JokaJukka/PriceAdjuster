@@ -67,10 +67,10 @@ namespace PriceAdjuster.Systems.UI
         private PlaceableNetData UpdatePrices(PlaceableNetData entityData,
             OriginalPlacableNetProps originalPlacableValues)
         {
-            var newPrice = originalPlacableValues.OriginalPrice * Mod.Settings.RoadPricePercentageSlider / 100;
+            var newPrice = originalPlacableValues.OriginalPrice * PriceCoefficient();
             entityData.m_DefaultConstructionCost = MathUtils.ClampToUInt(newPrice);
 
-            var newUpkeep = originalPlacableValues.OriginalUpkeep * Mod.Settings.RoadUpkeepPercentageSlider / 100;
+            var newUpkeep = originalPlacableValues.OriginalUpkeep * UpkeepCoefficient();
             entityData.m_DefaultUpkeepCost = newUpkeep;
 
             Mod.log.Debug(
