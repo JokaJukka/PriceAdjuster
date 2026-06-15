@@ -22,8 +22,8 @@ namespace PriceAdjuster
         }
 
         private PresetsEnum Preset { get; set; }
-        private float RoadPricePercentage { get; set; }
-        private float RoadUpkeepPercentage { get; set; }
+        private float RoadPriceMultiplier { get; set; }
+        private float RoadUpkeepMultiplier { get; set; }
 
         public enum PresetsEnum
         {
@@ -44,16 +44,16 @@ namespace PriceAdjuster
                 switch (value)
                 {
                     case PresetsEnum.Vanilla:
-                        RoadPricePercentage = 100;
-                        RoadUpkeepPercentage = 100;
+                        RoadPriceMultiplier = 1;
+                        RoadUpkeepMultiplier = 1;
                         break;
                     case PresetsEnum.Balanced:
-                        RoadPricePercentage = 250;
-                        RoadUpkeepPercentage = 200;
+                        RoadPriceMultiplier = 3;
+                        RoadUpkeepMultiplier = 2;
                         break;
                     case PresetsEnum.Realistic:
-                        RoadPricePercentage = 1000;
-                        RoadUpkeepPercentage = 500;
+                        RoadPriceMultiplier = 8;
+                        RoadUpkeepMultiplier = 4;
                         break;
                     case PresetsEnum.Custom:
                     default:
@@ -63,29 +63,29 @@ namespace PriceAdjuster
         }
 
 
-        [SettingsUISlider(min = 0.1f, max = 100f, step = 0.1f, scalarMultiplier = 100, unit = Unit.kPercentage)]
+        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction, updateOnDragEnd = true)]
         [SettingsUISection(MainTab, RoadGroup)]
-        [SettingsUIDisableByCondition(typeof(Settings), "isNotCustomPreset")]
-        public float RoadPricePercentageSlider
+        [SettingsUIDisableByCondition(typeof(Settings), nameof(IsNotCustomPreset))]
+        public float RoadPriceMultiplierSlider
         {
-            get => RoadPricePercentage;
+            get => RoadPriceMultiplier;
             set
             {
-                RoadPricePercentage = value;
+                RoadPriceMultiplier = value;
                 Mod.SchedulePriceRecalculation();
             }
         }
 
 
-        [SettingsUISlider(min = 0.1f, max = 100f, step = 0.1f, scalarMultiplier = 100, unit = Unit.kPercentage)]
+        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction, updateOnDragEnd = true)]
         [SettingsUISection(MainTab, RoadGroup)]
-        [SettingsUIDisableByCondition(typeof(Settings), "isNotCustomPreset")]
-        public float RoadUpkeepPercentageSlider
+        [SettingsUIDisableByCondition(typeof(Settings), nameof(IsNotCustomPreset))]
+        public float RoadUpkeepMultiplierSlider
         {
-            get => RoadUpkeepPercentage;
+            get => RoadUpkeepMultiplier;
             set
             {
-                RoadUpkeepPercentage = value;
+                RoadUpkeepMultiplier = value;
                 Mod.SchedulePriceRecalculation();
             }
         }
@@ -147,20 +147,20 @@ namespace PriceAdjuster
                 { _mSettings.GetEnumValueLocaleID(Settings.PresetsEnum.Custom), "Custom" },
 
                 {
-                    _mSettings.GetOptionLabelLocaleID(nameof(Settings.RoadPricePercentageSlider)),
+                    _mSettings.GetOptionLabelLocaleID(nameof(Settings.RoadPriceMultiplierSlider)),
                     "Road price multiplier"
                 },
                 {
-                    _mSettings.GetOptionDescLocaleID(nameof(Settings.RoadPricePercentageSlider)),
-                    "Sets the percentage of a price of building roads. 100% equals to vanilla game settings."
+                    _mSettings.GetOptionDescLocaleID(nameof(Settings.RoadPriceMultiplierSlider)),
+                    "Sets the multiplier of a price of building roads. 1 equals to vanilla game settings."
                 },
                 {
-                    _mSettings.GetOptionLabelLocaleID(nameof(Settings.RoadUpkeepPercentageSlider)),
+                    _mSettings.GetOptionLabelLocaleID(nameof(Settings.RoadUpkeepMultiplierSlider)),
                     "Road upkeep multiplier"
                 },
                 {
-                    _mSettings.GetOptionDescLocaleID(nameof(Settings.RoadUpkeepPercentageSlider)),
-                    "Sets the percentage of a price of maintaining roads. 100% equals to vanilla game settings."
+                    _mSettings.GetOptionDescLocaleID(nameof(Settings.RoadUpkeepMultiplierSlider)),
+                    "Sets the multiplier of a price of maintaining roads. 1 equals to vanilla game settings."
                 },
                 {
                     _mSettings.GetOptionLabelLocaleID(nameof(Settings.ForceRecalculatePrices)),
