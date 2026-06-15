@@ -12,15 +12,17 @@
 Is your city drowning in millions of bucks? Do you want to change how much you spend on roads? Well, **now you can!**
 
 ## Features
-- adjust price &amp; upkeep of roads
+- 3 settings presets (Vanilla, Balanced, Realistic)
+- adjust price &amp; upkeep of roads, tram &amp; train tracks manually
 - more to come!
-        
+
 ## Planned features
-- fine-tuned pricing (by road category)
+- fine-tuned road pricing (by road category)
+- custom tunnel/bridge pricing
 - other network pricing
 - landscaping pricing
-- tunnel/bridge pricing
 - pricing of roundabouts, cul-de-sacs etc.
+- adjust pricing based on network elevation
 
 ## Compatibility note
 This mod should be compatible with any other mods &amp; assets. All prices are modified at runtime;
@@ -38,7 +40,7 @@ when you remove the mod, all prices should go back to vanilla values.
     <!--Link to the forum post where the mod can be discussed-->
     <ForumLink Value=""/>
     <!--Version of the mod-->
-    <ModVersion Value="0.1.0"/>
+    <ModVersion Value="0.2.0"/>
     <!--Recommended version of the base game to use the mod-->
     <GameVersion Value="1.5.*"/>
     <!--Dependency for the mod, can be set multiple times-->
@@ -47,8 +49,7 @@ when you remove the mod, all prices should go back to vanilla values.
     <RequiredDLC Value=""/>
     <!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
     <ChangeLog>
-- Initial mod release 
-- working price &amp; upkeep modification for roads 
+- working price &amp; upkeep modification of tram &amp; train tracks 
     </ChangeLog>
     <!--External link, can be set multiple times. supported types are "discord", "github", "youtube", "twitch", "x", "paypal", "patreon", "buymeacoffee", "kofi", "crowdin", "gitlab", "gofundme"-->
     <ExternalLink Type="github" Url="https://github.com/JokaJukka/PriceAdjuster"/>
