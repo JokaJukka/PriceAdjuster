@@ -49,11 +49,11 @@ namespace PriceAdjuster
                         break;
                     case PresetsEnum.Balanced:
                         RoadPriceMultiplier = 3;
-                        RoadUpkeepMultiplier = 2;
+                        RoadUpkeepMultiplier = 1;
                         break;
                     case PresetsEnum.Realistic:
                         RoadPriceMultiplier = 8;
-                        RoadUpkeepMultiplier = 4;
+                        RoadUpkeepMultiplier = 1;
                         break;
                     case PresetsEnum.Custom:
                     default:
