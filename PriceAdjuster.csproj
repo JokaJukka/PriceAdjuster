@@ -77,4 +77,8 @@
             <Private>false</Private>
         </Reference>
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Screenshots\" />
+    </ItemGroup>
 </Project>
