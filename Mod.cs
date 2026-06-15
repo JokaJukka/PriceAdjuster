@@ -22,7 +22,7 @@ namespace PriceAdjuster
 
         public static void SchedulePriceRecalculation()
         {
-            var query = _entityManager.CreateEntityQuery(ComponentType.ReadOnly<OriginalPlacableNetProps>());
+            var query = _entityManager.CreateEntityQuery(ComponentType.ReadOnly<OriginalPlaceableNetProps>());
             var entities = query.ToEntityArray(Allocator.Temp);
             
             log.Info($"Scheduling price recalculation for {entities.Length} entities!");

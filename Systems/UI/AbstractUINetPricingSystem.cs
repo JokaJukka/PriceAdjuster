@@ -34,7 +34,7 @@ namespace PriceAdjuster.Systems.UI
             for (var i = 0; i < entitiesData.Length; i++)
             {
                 var entityData = entitiesData[i];
-                var originalPrices = new OriginalPlacableNetProps(entityData.m_DefaultConstructionCost,
+                var originalPrices = new OriginalPlaceableNetProps(entityData.m_DefaultConstructionCost,
                     entityData.m_DefaultUpkeepCost);
                 entityData = UpdatePrices(entitiesData[i], originalPrices);
 
@@ -50,7 +50,7 @@ namespace PriceAdjuster.Systems.UI
         {
             var entities = RecalcQuery.ToEntityArray(Allocator.Temp);
             var entitiesData = RecalcQuery.ToComponentDataArray<PlaceableNetData>(Allocator.Temp);
-            var entitiesOriginalPrices = RecalcQuery.ToComponentDataArray<OriginalPlacableNetProps>(Allocator.Temp);
+            var entitiesOriginalPrices = RecalcQuery.ToComponentDataArray<OriginalPlaceableNetProps>(Allocator.Temp);
 
             for (var i = 0; i < entitiesData.Length; i++)
             {
@@ -65,16 +65,16 @@ namespace PriceAdjuster.Systems.UI
         }
 
         private PlaceableNetData UpdatePrices(PlaceableNetData entityData,
-            OriginalPlacableNetProps originalPlacableValues)
+            OriginalPlaceableNetProps originalPlaceableValues)
         {
-            var newPrice = originalPlacableValues.OriginalPrice * PriceCoefficient();
+            var newPrice = originalPlaceableValues.OriginalPrice * PriceCoefficient();
             entityData.m_DefaultConstructionCost = MathUtils.ClampToUInt(newPrice);
 
-            var newUpkeep = originalPlacableValues.OriginalUpkeep * UpkeepCoefficient();
+            var newUpkeep = originalPlaceableValues.OriginalUpkeep * UpkeepCoefficient();
             entityData.m_DefaultUpkeepCost = newUpkeep;
 
             Mod.log.Debug(
-                $"Price: {originalPlacableValues.OriginalPrice} -> {newPrice}; Upkeep: {originalPlacableValues.OriginalUpkeep} -> {newUpkeep}");
+                $"Price: {originalPlaceableValues.OriginalPrice} -> {newPrice}; Upkeep: {originalPlaceableValues.OriginalUpkeep} -> {newUpkeep}");
 
             return entityData;
         }

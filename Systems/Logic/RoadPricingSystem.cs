@@ -17,7 +17,7 @@ namespace PriceAdjuster.Systems.Logic
                     ComponentType.ReadWrite<PlaceableNetComposition>(),
                     ComponentType.ReadOnly<RoadComposition>()
                 },
-                None = new[] { ComponentType.ReadOnly<OriginalPlacableNetProps>() }
+                None = new[] { ComponentType.ReadOnly<OriginalPlaceableNetProps>() }
             });
 
             RecalcQuery = GetEntityQuery(new EntityQueryDesc
