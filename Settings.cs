@@ -228,6 +228,10 @@ namespace PriceAdjuster
                     _mSettings.GetOptionDescLocaleID(nameof(Settings.ForceRecalculatePrices)),
                     "Forces the mod to recalculate all the modified prices; this shouldn't be necessary though."
                 },
+                {
+                    _mSettings.GetOptionWarningLocaleID(nameof(Settings.ForceRecalculatePrices)),
+                    "Do you want to force recalculate all prices?"
+                },
             };
         }
 
