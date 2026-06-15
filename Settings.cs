@@ -22,12 +22,13 @@ namespace PriceAdjuster
         }
 
         private PresetsEnum Preset { get; set; }
-        private int RoadPricePercentage { get; set; }
-        private int RoadUpkeepPercentage { get; set; }
+        private float RoadPricePercentage { get; set; }
+        private float RoadUpkeepPercentage { get; set; }
 
         public enum PresetsEnum
         {
             Vanilla,
+            Balanced,
             Realistic,
             Custom
         }
@@ -46,9 +47,13 @@ namespace PriceAdjuster
                         RoadPricePercentage = 100;
                         RoadUpkeepPercentage = 100;
                         break;
-                    case PresetsEnum.Realistic:
-                        RoadPricePercentage = 200;
+                    case PresetsEnum.Balanced:
+                        RoadPricePercentage = 250;
                         RoadUpkeepPercentage = 200;
+                        break;
+                    case PresetsEnum.Realistic:
+                        RoadPricePercentage = 1000;
+                        RoadUpkeepPercentage = 500;
                         break;
                     case PresetsEnum.Custom:
                     default:
@@ -58,10 +63,10 @@ namespace PriceAdjuster
         }
 
 
-        [SettingsUISlider(min = 10, max = 1000, step = 5, scalarMultiplier = 1, unit = Unit.kPercentage)]
+        [SettingsUISlider(min = 0.1f, max = 100f, step = 0.1f, scalarMultiplier = 100, unit = Unit.kPercentage)]
         [SettingsUISection(MainTab, RoadGroup)]
         [SettingsUIDisableByCondition(typeof(Settings), "isNotCustomPreset")]
-        public int RoadPricePercentageSlider
+        public float RoadPricePercentageSlider
         {
             get => RoadPricePercentage;
             set
@@ -72,10 +77,10 @@ namespace PriceAdjuster
         }
 
 
-        [SettingsUISlider(min = 10, max = 1000, step = 5, scalarMultiplier = 1, unit = Unit.kPercentage)]
+        [SettingsUISlider(min = 0.1f, max = 100f, step = 0.1f, scalarMultiplier = 100, unit = Unit.kPercentage)]
         [SettingsUISection(MainTab, RoadGroup)]
         [SettingsUIDisableByCondition(typeof(Settings), "isNotCustomPreset")]
-        public int RoadUpkeepPercentageSlider
+        public float RoadUpkeepPercentageSlider
         {
             get => RoadUpkeepPercentage;
             set
@@ -100,7 +105,7 @@ namespace PriceAdjuster
             }
         }
 
-        public bool IsNotCustomPreset() => Preset != PresetsEnum.Custom;
+        public bool IsNotCustomPreset() => PresetsDropdown != PresetsEnum.Custom;
 
 
         public override void SetDefaults()
@@ -127,6 +132,7 @@ namespace PriceAdjuster
                 { _mSettings.GetOptionTabLocaleID(Settings.MainTab), "Main" },
                 { _mSettings.GetOptionGroupLocaleID(Settings.PresetGroup), "Presets" },
                 { _mSettings.GetOptionGroupLocaleID(Settings.RoadGroup), "Roads" },
+                { _mSettings.GetOptionGroupLocaleID(Settings.AdvancedGroup), "Advanced" },
 
                 { _mSettings.GetOptionLabelLocaleID(nameof(Settings.PresetsDropdown)), "Preset" },
                 {
@@ -135,7 +141,8 @@ namespace PriceAdjuster
                 },
 
 
-                { _mSettings.GetEnumValueLocaleID(Settings.PresetsEnum.Vanilla), "Vanilla" },
+                { _mSettings.GetEnumValueLocaleID(Settings.PresetsEnum.Vanilla), "Vanilla - Base Game prices" },
+                { _mSettings.GetEnumValueLocaleID(Settings.PresetsEnum.Balanced), "Balanced" },
                 { _mSettings.GetEnumValueLocaleID(Settings.PresetsEnum.Realistic), "Realistic" },
                 { _mSettings.GetEnumValueLocaleID(Settings.PresetsEnum.Custom), "Custom" },
 

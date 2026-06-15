@@ -34,8 +34,8 @@ namespace PriceAdjuster.Systems.UI
             RequireAnyForUpdate(InitialQuery, RecalcQuery);
         }
 
-        protected override float PriceCoefficient() => (float)Mod.Settings.RoadPricePercentageSlider / 100;
+        protected override float PriceCoefficient() => (float)Mod.Settings.RoadPricePercentageSlider;
 
-        protected override float UpkeepCoefficient() => (float)Mod.Settings.RoadUpkeepPercentageSlider / 100;
+        protected override float UpkeepCoefficient() => (float)Mod.Settings.RoadUpkeepPercentageSlider;
     }
 }
