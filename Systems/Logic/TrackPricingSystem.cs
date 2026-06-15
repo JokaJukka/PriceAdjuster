@@ -2,9 +2,9 @@ using Game.Prefabs;
 using PriceAdjuster.Components;
 using Unity.Entities;
 
-namespace PriceAdjuster.Systems.UI
+namespace PriceAdjuster.Systems.Logic
 {
-    public partial class UIRoadPricingSystem : AbstractUINetPricingSystem
+    public partial class TrackPricingSystem : AbstractNetPricingSystem
     {
         protected override void OnCreate()
         {
@@ -14,8 +14,8 @@ namespace PriceAdjuster.Systems.UI
             {
                 All = new[]
                 {
-                    ComponentType.ReadWrite<PlaceableNetData>(),
-                    ComponentType.ReadOnly<RoadData>()
+                    ComponentType.ReadWrite<PlaceableNetComposition>(),
+                    ComponentType.ReadOnly<TrackComposition>()
                 },
                 None = new[] { ComponentType.ReadOnly<OriginalPlaceableNetProps>() }
             });
@@ -24,8 +24,8 @@ namespace PriceAdjuster.Systems.UI
             {
                 All = new[]
                 {
-                    ComponentType.ReadWrite<PlaceableNetData>(),
-                    ComponentType.ReadOnly<RoadData>(),
+                    ComponentType.ReadWrite<PlaceableNetComposition>(),
+                    ComponentType.ReadOnly<TrackComposition>(),
                     ComponentType.ReadWrite<ScheduledPriceRecalculation>()
                 },
             });
@@ -33,8 +33,8 @@ namespace PriceAdjuster.Systems.UI
             RequireAnyForUpdate(InitialQuery, RecalcQuery);
         }
 
-        protected override float PriceCoefficient() => Mod.Settings.RoadPriceMultiplierSlider;
+        protected override float PriceCoefficient() => Mod.Settings.TrackPriceMultiplierSlider;
 
-        protected override float UpkeepCoefficient() => Mod.Settings.RoadUpkeepMultiplierSlider;
+        protected override float UpkeepCoefficient() => Mod.Settings.TrackUpkeepMultiplierSlider;
     }
 }

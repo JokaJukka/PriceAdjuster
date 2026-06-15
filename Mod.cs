@@ -50,8 +50,12 @@ namespace PriceAdjuster
             
             AssetDatabase.global.LoadSettings(nameof(PriceAdjuster), Settings, new Settings(this));
             
+            // Building updates
             updateSystem.UpdateAt<RoadPricingSystem>(SystemUpdatePhase.Modification1);
+            updateSystem.UpdateAt<TrackPricingSystem>(SystemUpdatePhase.Modification1);
+            // UI updates
             updateSystem.UpdateAt<UIRoadPricingSystem>(SystemUpdatePhase.Modification1);
+            updateSystem.UpdateAt<UITrackPricingSystem>(SystemUpdatePhase.Modification1);
         }
 
         public void OnDispose()
