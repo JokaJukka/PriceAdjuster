@@ -24,9 +24,9 @@ namespace PriceAdjuster
         {
             var query = _entityManager.CreateEntityQuery(ComponentType.ReadOnly<OriginalPlaceableNetProps>());
             var entities = query.ToEntityArray(Allocator.Temp);
-            
+
             log.Info($"Scheduling price recalculation for {entities.Length} entities!");
-            
+
             foreach (var entity in entities)
             {
                 _entityManager.AddComponent<ScheduledPriceRecalculation>(entity);
@@ -43,13 +43,13 @@ namespace PriceAdjuster
                 log.Info($"Current mod asset at {asset.path}");
 
             _entityManager = updateSystem.EntityManager;
-            
+
             Settings = new Settings(this);
             Settings.RegisterInOptionsUI();
             GameManager.instance.localizationManager.AddSource("en-US", new LocaleEN(Settings));
-            
+
             AssetDatabase.global.LoadSettings(nameof(PriceAdjuster), Settings, new Settings(this));
-            
+
             // Building updates
             updateSystem.UpdateAt<RoadPricingSystem>(SystemUpdatePhase.Modification1);
             updateSystem.UpdateAt<TrackPricingSystem>(SystemUpdatePhase.Modification1);

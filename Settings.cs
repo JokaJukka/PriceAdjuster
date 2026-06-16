@@ -71,8 +71,7 @@ namespace PriceAdjuster
             }
         }
 
-        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction,
-            updateOnDragEnd = true)]
+        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction)]
         [SettingsUISection(MainTab, RoadGroup)]
         [SettingsUIDisableByCondition(typeof(Settings), nameof(IsNotCustomPreset))]
         public float RoadPriceMultiplierSlider
@@ -85,8 +84,7 @@ namespace PriceAdjuster
             }
         }
 
-        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction,
-            updateOnDragEnd = true)]
+        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction)]
         [SettingsUISection(MainTab, RoadGroup)]
         [SettingsUIDisableByCondition(typeof(Settings), nameof(IsNotCustomPreset))]
         public float RoadUpkeepMultiplierSlider
@@ -99,8 +97,7 @@ namespace PriceAdjuster
             }
         }
 
-        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction,
-            updateOnDragEnd = true)]
+        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction)]
         [SettingsUISection(MainTab, TrackGroup)]
         [SettingsUIDisableByCondition(typeof(Settings), nameof(IsNotCustomPreset))]
         public float TrackPriceMultiplierSlider
@@ -113,8 +110,7 @@ namespace PriceAdjuster
             }
         }
 
-        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction,
-            updateOnDragEnd = true)]
+        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction)]
         [SettingsUISection(MainTab, TrackGroup)]
         [SettingsUIDisableByCondition(typeof(Settings), nameof(IsNotCustomPreset))]
         public float TrackUpkeepMultiplierSlider
