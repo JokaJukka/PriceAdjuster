@@ -1,8 +1,8 @@
-﻿using Colossal.Logging;
+﻿using Colossal.IO.AssetDatabase;
+using Colossal.Logging;
 using Game;
 using Game.Modding;
 using Game.SceneFlow;
-using Colossal.IO.AssetDatabase;
 using PriceAdjuster.Components;
 using PriceAdjuster.Locale;
 using PriceAdjuster.Settings;
@@ -18,24 +18,9 @@ namespace PriceAdjuster
         public static ILog log = LogManager.GetLogger($"{nameof(PriceAdjuster)}.{nameof(Mod)}")
             .SetShowsErrorsInUI(false);
 
-        public static PriceSettings Settings { get; private set; }
-
         private static EntityManager _entityManager;
 
-        public static void SchedulePriceRecalculation()
-        {
-            var query = _entityManager.CreateEntityQuery(ComponentType.ReadOnly<OriginalPlaceableNetProps>());
-            var entities = query.ToEntityArray(Allocator.Temp);
-
-            log.Info($"Scheduling price recalculation for {entities.Length} entities!");
-
-            foreach (var entity in entities)
-            {
-                _entityManager.AddComponent<ScheduledPriceRecalculation>(entity);
-            }
-
-            entities.Dispose();
-        }
+        public static PriceSettings Settings { get; private set; }
 
         public void OnLoad(UpdateSystem updateSystem)
         {
@@ -68,6 +53,18 @@ namespace PriceAdjuster
                 Settings.UnregisterInOptionsUI();
                 Settings = null;
             }
+        }
+
+        public static void SchedulePriceRecalculation()
+        {
+            var query = _entityManager.CreateEntityQuery(ComponentType.ReadOnly<OriginalPlaceableNetProps>());
+            var entities = query.ToEntityArray(Allocator.Temp);
+
+            log.Info($"Scheduling price recalculation for {entities.Length} entities!");
+
+            foreach (var entity in entities) _entityManager.AddComponent<ScheduledPriceRecalculation>(entity);
+
+            entities.Dispose();
         }
     }
 }

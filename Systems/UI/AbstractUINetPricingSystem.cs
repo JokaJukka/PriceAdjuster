@@ -8,7 +8,7 @@ using Unity.Entities;
 namespace PriceAdjuster.Systems.UI
 {
     /// <summary>
-    /// This class modifies just the pricing of networks in UI.
+    ///     This class modifies just the pricing of networks in UI.
     /// </summary>
     public abstract partial class AbstractUINetPricingSystem : GameSystemBase
     {

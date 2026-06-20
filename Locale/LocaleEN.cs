@@ -93,7 +93,7 @@ namespace PriceAdjuster.Locale
                 {
                     _settings.GetOptionWarningLocaleID(nameof(PriceSettings.ForceRecalculatePrices)),
                     "Do you want to force recalculate all prices?"
-                },
+                }
             };
         }
 

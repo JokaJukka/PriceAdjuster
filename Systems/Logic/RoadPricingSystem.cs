@@ -27,7 +27,7 @@ namespace PriceAdjuster.Systems.Logic
                     ComponentType.ReadWrite<PlaceableNetComposition>(),
                     ComponentType.ReadOnly<RoadComposition>(),
                     ComponentType.ReadWrite<ScheduledPriceRecalculation>()
-                },
+                }
             });
 
             RequireAnyForUpdate(InitialQuery, RecalcQuery);

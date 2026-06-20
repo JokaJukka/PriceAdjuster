@@ -8,7 +8,7 @@ using Unity.Entities;
 namespace PriceAdjuster.Systems.Logic
 {
     /// <summary>
-    /// This class is a template for modifying the pricing of existing & to-be created networks.
+    ///     This class is a template for modifying the pricing of existing & to-be created networks.
     /// </summary>
     public abstract partial class AbstractNetPricingSystem : GameSystemBase
     {
@@ -16,7 +16,7 @@ namespace PriceAdjuster.Systems.Logic
         protected EntityQuery RecalcQuery;
 
         protected abstract float PriceCoefficient();
-        
+
         protected abstract float UpkeepCoefficient();
 
         protected override void OnUpdate()
@@ -71,7 +71,7 @@ namespace PriceAdjuster.Systems.Logic
 
             var newUpkeep = originalPlaceableValues.OriginalUpkeep * UpkeepCoefficient();
             entityData.m_UpkeepCost = newUpkeep;
-            
+
             Mod.log.Debug(
                 $"Price: {originalPlaceableValues.OriginalPrice} -> {newPrice}; Upkeep: {originalPlaceableValues.OriginalUpkeep} -> {newUpkeep}");
 

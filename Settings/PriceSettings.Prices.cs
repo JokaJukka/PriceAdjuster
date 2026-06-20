@@ -5,9 +5,6 @@ namespace PriceAdjuster.Settings
 {
     public sealed partial class PriceSettings
     {
-        [SettingsUIHidden] public float CustomRoadPriceMultiplier { get; set; }
-        [SettingsUIHidden] public float CustomTrackPriceMultiplier { get; set; }
-
         public enum PresetsEnum
         {
             Vanilla,
@@ -15,6 +12,9 @@ namespace PriceAdjuster.Settings
             Realistic,
             Custom
         }
+
+        [SettingsUIHidden] public float CustomRoadPriceMultiplier { get; set; } = 1f;
+        [SettingsUIHidden] public float CustomTrackPriceMultiplier { get; set; } = 1f;
 
         [SettingsUISection(PricesTab, PresetGroup)]
         public PresetsEnum Preset { get; set; }

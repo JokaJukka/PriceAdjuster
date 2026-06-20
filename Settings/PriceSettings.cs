@@ -13,7 +13,7 @@ namespace PriceAdjuster.Settings
         public const string PricesTab = "Prices";
         public const string UpkeepTab = "Upkeep";
         public const string AdvancedTab = "Advanced";
-        
+
         public const string PresetGroup = "Presets";
         public const string RoadTypeGroup = "Road Type";
         public const string DebugGroup = "Debug";

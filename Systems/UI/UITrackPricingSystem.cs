@@ -27,7 +27,7 @@ namespace PriceAdjuster.Systems.UI
                     ComponentType.ReadWrite<PlaceableNetData>(),
                     ComponentType.ReadOnly<TrackData>(),
                     ComponentType.ReadWrite<ScheduledPriceRecalculation>()
-                },
+                }
             });
 
             RequireAnyForUpdate(InitialQuery, RecalcQuery);

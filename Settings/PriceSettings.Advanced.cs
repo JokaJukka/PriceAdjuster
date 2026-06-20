@@ -6,16 +6,13 @@ namespace PriceAdjuster.Settings
     {
         [SettingsUISection(AdvancedTab, DebugGroup)]
         [SettingsUIButton]
-        [SettingsUIConfirmation(null, null)]
+        [SettingsUIConfirmation()]
         public bool ForceRecalculatePrices
         {
             get => false;
             set
             {
-                if (value)
-                {
-                    Mod.SchedulePriceRecalculation();
-                }
+                if (value) Mod.SchedulePriceRecalculation();
             }
         }
     }

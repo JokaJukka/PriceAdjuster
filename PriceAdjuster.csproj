@@ -14,7 +14,7 @@
 
     <Target Name="CustomModPostProcessorConfig" AfterTargets="ModPostProcessorConfig">
         <ItemGroup>
-            <_ModPostProcessorRefs Include="@(ReferencePath)" Condition="!$([System.String]::Copy('%(Identity)').Contains('.nuget'))" />
+            <_ModPostProcessorRefs Include="@(ReferencePath)" Condition="!$([System.String]::Copy('%(Identity)').Contains('.nuget'))"/>
         </ItemGroup>
         <PropertyGroup>
             <ModPostProcessorArgs>"$(ModPostProcessorFullPath)" PostProcess "$(TargetPath)" -u "$(UnityModProjectFullPath)" @(_ModPostProcessorRefs->'-r "%(Identity)"', ' ') -p Windows -p macOS -p Linux -d -v</ModPostProcessorArgs>
@@ -79,6 +79,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Screenshots\" />
+        <Folder Include="Screenshots\"/>
     </ItemGroup>
 </Project>
