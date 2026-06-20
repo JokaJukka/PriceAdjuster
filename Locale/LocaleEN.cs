@@ -18,13 +18,20 @@ namespace PriceAdjuster.Locale
         {
             return new Dictionary<string, string>
             {
+                // Tabs & Groups
                 { _settings.GetSettingsLocaleID(), "PriceAdjuster" },
-
-                // Prices tab
                 { _settings.GetOptionTabLocaleID(PriceSettings.PricesTab), "Prices" },
+                { _settings.GetOptionTabLocaleID(PriceSettings.UpkeepTab), "Upkeep" },
+                {
+                    _settings.GetOptionLabelLocaleID(nameof(PriceSettings.UpkeepNotes)),
+                    "Unlike the prices, upkeep seems to be quite balanced in the base game and is not generally recommended to change it."
+                },
+                { _settings.GetOptionTabLocaleID(PriceSettings.AdvancedTab), "Advanced" },
                 { _settings.GetOptionGroupLocaleID(PriceSettings.PresetGroup), "Presets" },
                 { _settings.GetOptionGroupLocaleID(PriceSettings.RoadTypeGroup), "Road Type" },
+                { _settings.GetOptionGroupLocaleID(PriceSettings.DebugGroup), "Debug" },
 
+                // Prices tab
                 { _settings.GetOptionLabelLocaleID(nameof(PriceSettings.Preset)), "Preset" },
                 {
                     _settings.GetOptionDescLocaleID(nameof(PriceSettings.Preset)),
@@ -57,9 +64,6 @@ namespace PriceAdjuster.Locale
                 },
 
                 // Upkeep tab
-                { _settings.GetOptionTabLocaleID(PriceSettings.UpkeepTab), "Upkeep" },
-                { _settings.GetOptionGroupLocaleID(PriceSettings.InfrastructureTypeGroup), "Infrastructure Type" },
-
                 {
                     _settings.GetOptionLabelLocaleID(nameof(PriceSettings.RoadUpkeepMultiplier)),
                     "Road upkeep multiplier"
@@ -78,9 +82,6 @@ namespace PriceAdjuster.Locale
                 },
 
                 // Advanced tab
-                { _settings.GetOptionTabLocaleID(PriceSettings.AdvancedTab), "Advanced" },
-                { _settings.GetOptionGroupLocaleID(PriceSettings.DebugGroup), "Main" },
-
                 {
                     _settings.GetOptionLabelLocaleID(nameof(PriceSettings.ForceRecalculatePrices)),
                     "Force recalculate all prices"

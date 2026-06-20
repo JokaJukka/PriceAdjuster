@@ -5,8 +5,8 @@ namespace PriceAdjuster.Settings
 {
     public sealed partial class PriceSettings
     {
-        [SettingsUIHidden] private float CustomRoadPriceMultiplier { get; set; }
-        [SettingsUIHidden] private float CustomTrackPriceMultiplier { get; set; }
+        [SettingsUIHidden] public float CustomRoadPriceMultiplier { get; set; }
+        [SettingsUIHidden] public float CustomTrackPriceMultiplier { get; set; }
 
         public enum PresetsEnum
         {
@@ -72,5 +72,12 @@ namespace PriceAdjuster.Settings
         }
 
         private bool IsNotCustomPreset() => Preset != PresetsEnum.Custom;
+
+        private void ResetPrices()
+        {
+            Preset = PresetsEnum.Vanilla;
+            CustomRoadPriceMultiplier = 1f;
+            CustomTrackPriceMultiplier = 1f;
+        }
     }
 }
