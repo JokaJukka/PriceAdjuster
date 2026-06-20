@@ -1,7 +1,6 @@
 ﻿using Colossal.IO.AssetDatabase;
 using Game.Modding;
 using Game.Settings;
-using Game.UI;
 
 namespace PriceAdjuster.Settings
 {
@@ -24,79 +23,13 @@ namespace PriceAdjuster.Settings
         {
         }
 
-        [SettingsUIHidden] private float CustomRoadPriceMultiplier { get; set; }
-        [SettingsUIHidden] private float CustomTrackPriceMultiplier { get; set; }
-
-        public enum PresetsEnum
-        {
-            Vanilla,
-            Balanced,
-            Realistic,
-            Custom
-        }
-
-        [SettingsUISection(PricesTab, PresetGroup)]
-        public PresetsEnum Preset { get; set; }
-
-        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction)]
-        [SettingsUISection(PricesTab, RoadTypeGroup)]
-        [SettingsUIDisableByCondition(typeof(PriceSettings), nameof(IsNotCustomPreset))]
-        public float RoadPriceMultiplier
-        {
-            get
-            {
-                return Preset switch
-                {
-                    PresetsEnum.Vanilla => 1f,
-                    PresetsEnum.Balanced => 3f,
-                    PresetsEnum.Realistic => 8f,
-                    _ => CustomRoadPriceMultiplier
-                };
-            }
-            set
-            {
-                if (Preset == PresetsEnum.Custom)
-                {
-                    CustomRoadPriceMultiplier = value;
-                }
-
-                Mod.SchedulePriceRecalculation();
-            }
-        }
-
-        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction)]
-        [SettingsUISection(PricesTab, RoadTypeGroup)]
-        [SettingsUIDisableByCondition(typeof(PriceSettings), nameof(IsNotCustomPreset))]
-        public float TrackPriceMultiplier
-        {
-            get
-            {
-                return Preset switch
-                {
-                    PresetsEnum.Vanilla => 1f,
-                    PresetsEnum.Balanced => 3f,
-                    PresetsEnum.Realistic => 8f,
-                    _ => CustomTrackPriceMultiplier
-                };
-            }
-            set
-            {
-                if (Preset == PresetsEnum.Custom)
-                {
-                    CustomTrackPriceMultiplier = value;
-                }
-
-                Mod.SchedulePriceRecalculation();
-            }
-        }
-
-        private bool IsNotCustomPreset() => Preset != PresetsEnum.Custom;
-
         public override void SetDefaults()
         {
             Preset = PresetsEnum.Vanilla;
             CustomRoadPriceMultiplier = 1f;
             CustomTrackPriceMultiplier = 1f;
+            RoadUpkeepMultiplier = 1f;
+            TrackUpkeepMultiplier = 1f;
         }
     }
 }
