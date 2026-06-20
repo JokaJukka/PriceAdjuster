@@ -80,6 +80,5 @@
 
     <ItemGroup>
       <Folder Include="Screenshots\" />
-      <Folder Include="Settings\" />
     </ItemGroup>
 </Project>

@@ -4,6 +4,8 @@ using Game.Modding;
 using Game.SceneFlow;
 using Colossal.IO.AssetDatabase;
 using PriceAdjuster.Components;
+using PriceAdjuster.Locale;
+using PriceAdjuster.Settings;
 using PriceAdjuster.Systems.Logic;
 using PriceAdjuster.Systems.UI;
 using Unity.Collections;
@@ -16,7 +18,7 @@ namespace PriceAdjuster
         public static ILog log = LogManager.GetLogger($"{nameof(PriceAdjuster)}.{nameof(Mod)}")
             .SetShowsErrorsInUI(false);
 
-        public static Settings Settings { get; private set; }
+        public static PriceSettings Settings { get; private set; }
 
         private static EntityManager _entityManager;
 
@@ -44,11 +46,11 @@ namespace PriceAdjuster
 
             _entityManager = updateSystem.EntityManager;
 
-            Settings = new Settings(this);
+            Settings = new PriceSettings(this);
             Settings.RegisterInOptionsUI();
             GameManager.instance.localizationManager.AddSource("en-US", new LocaleEN(Settings));
 
-            AssetDatabase.global.LoadSettings(nameof(PriceAdjuster), Settings, new Settings(this));
+            AssetDatabase.global.LoadSettings(nameof(PriceAdjuster), Settings);
 
             // Building updates
             updateSystem.UpdateAt<RoadPricingSystem>(SystemUpdatePhase.Modification1);

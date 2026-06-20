@@ -33,8 +33,8 @@ namespace PriceAdjuster.Systems.Logic
             RequireAnyForUpdate(InitialQuery, RecalcQuery);
         }
 
-        protected override float PriceCoefficient() => Mod.Settings.RoadPriceMultiplierSlider;
+        protected override float PriceCoefficient() => Mod.Settings.RoadPriceMultiplier;
 
-        protected override float UpkeepCoefficient() => Mod.Settings.RoadUpkeepMultiplierSlider;
+        protected override float UpkeepCoefficient() => Mod.Settings.RoadUpkeepMultiplier;
     }
 }

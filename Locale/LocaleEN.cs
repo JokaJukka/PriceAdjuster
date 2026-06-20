@@ -1,0 +1,103 @@
+using System.Collections.Generic;
+using Colossal;
+using PriceAdjuster.Settings;
+
+namespace PriceAdjuster.Locale
+{
+    public class LocaleEN : IDictionarySource
+    {
+        private readonly PriceSettings _settings;
+
+        public LocaleEN(PriceSettings settings)
+        {
+            _settings = settings;
+        }
+
+        public IEnumerable<KeyValuePair<string, string>> ReadEntries(IList<IDictionaryEntryError> errors,
+            Dictionary<string, int> indexCounts)
+        {
+            return new Dictionary<string, string>
+            {
+                { _settings.GetSettingsLocaleID(), "PriceAdjuster" },
+
+                // Prices tab
+                { _settings.GetOptionTabLocaleID(PriceSettings.PricesTab), "Prices" },
+                { _settings.GetOptionGroupLocaleID(PriceSettings.PresetGroup), "Presets" },
+                { _settings.GetOptionGroupLocaleID(PriceSettings.RoadTypeGroup), "Road Type" },
+
+                { _settings.GetOptionLabelLocaleID(nameof(PriceSettings.Preset)), "Preset" },
+                {
+                    _settings.GetOptionDescLocaleID(nameof(PriceSettings.Preset)),
+                    "Configures the pricing with predefined preset"
+                },
+                {
+                    _settings.GetEnumValueLocaleID(PriceSettings.PresetsEnum.Vanilla),
+                    "Vanilla - Base Game prices"
+                },
+                { _settings.GetEnumValueLocaleID(PriceSettings.PresetsEnum.Balanced), "Balanced" },
+                { _settings.GetEnumValueLocaleID(PriceSettings.PresetsEnum.Realistic), "Realistic" },
+                { _settings.GetEnumValueLocaleID(PriceSettings.PresetsEnum.Custom), "Custom" },
+
+                {
+                    _settings.GetOptionLabelLocaleID(nameof(PriceSettings.RoadPriceMultiplier)),
+                    "Road price multiplier"
+                },
+                {
+                    _settings.GetOptionDescLocaleID(nameof(PriceSettings.RoadPriceMultiplier)),
+                    "Sets the multiplier of a price of building roads. 1 equals to vanilla game settings."
+                },
+
+                {
+                    _settings.GetOptionLabelLocaleID(nameof(PriceSettings.TrackPriceMultiplier)),
+                    "Track price multiplier"
+                },
+                {
+                    _settings.GetOptionDescLocaleID(nameof(PriceSettings.TrackPriceMultiplier)),
+                    "Sets the multiplier of a price of building tracks for trains & trams. 1 equals to vanilla game settings."
+                },
+
+                // Upkeep tab
+                { _settings.GetOptionTabLocaleID(PriceSettings.UpkeepTab), "Upkeep" },
+                { _settings.GetOptionGroupLocaleID(PriceSettings.InfrastructureTypeGroup), "Infrastructure Type" },
+
+                {
+                    _settings.GetOptionLabelLocaleID(nameof(PriceSettings.RoadUpkeepMultiplier)),
+                    "Road upkeep multiplier"
+                },
+                {
+                    _settings.GetOptionDescLocaleID(nameof(PriceSettings.RoadUpkeepMultiplier)),
+                    "Sets the multiplier of a price of maintaining roads. 1 equals to vanilla game settings."
+                },
+                {
+                    _settings.GetOptionLabelLocaleID(nameof(PriceSettings.TrackUpkeepMultiplier)),
+                    "Track upkeep multiplier"
+                },
+                {
+                    _settings.GetOptionDescLocaleID(nameof(PriceSettings.TrackUpkeepMultiplier)),
+                    "Sets the multiplier of a price of maintaining tracks for trains & trams. 1 equals to vanilla game settings."
+                },
+
+                // Advanced tab
+                { _settings.GetOptionTabLocaleID(PriceSettings.AdvancedTab), "Advanced" },
+                { _settings.GetOptionGroupLocaleID(PriceSettings.DebugGroup), "Main" },
+
+                {
+                    _settings.GetOptionLabelLocaleID(nameof(PriceSettings.ForceRecalculatePrices)),
+                    "Force recalculate all prices"
+                },
+                {
+                    _settings.GetOptionDescLocaleID(nameof(PriceSettings.ForceRecalculatePrices)),
+                    "Forces the mod to recalculate all the modified prices; this shouldn't be necessary though."
+                },
+                {
+                    _settings.GetOptionWarningLocaleID(nameof(PriceSettings.ForceRecalculatePrices)),
+                    "Do you want to force recalculate all prices?"
+                },
+            };
+        }
+
+        public void Unload()
+        {
+        }
+    }
+}
