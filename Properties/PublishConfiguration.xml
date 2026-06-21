@@ -12,21 +12,28 @@
 Is your city drowning in millions of bucks? Do you want to change how much you spend on roads? Well, **now you can!**
 
 ## Features
-- 3 settings presets (Vanilla, Balanced, Realistic)
-- adjust price &amp; upkeep of roads, tram &amp; train tracks manually
+- adjust pricing of roads &amp; track building!
+    - set prices individually for normal roads and highways
+    - set prices individually for train, tram &amp; subway tracks
+    - tweak pricing manually or choose from three included presets (Vanilla, Balanced, Realistic)
+- adjust pricing of road &amp; track upkeep!
+    - set upkeep individually for normal roads and highways
+    - set upkeep individually for train, tram &amp; subway tracks
 - more to come!
 
 ## Planned features
-- fine-tuned road pricing (by road category)
+- adjust prices based on network elevation
 - custom tunnel/bridge pricing
 - other network pricing
 - landscaping pricing
 - pricing of roundabouts, cul-de-sacs etc.
-- adjust pricing based on network elevation
 
 ## Compatibility note
 This mod should be compatible with any other mods &amp; assets. All prices are modified at runtime;
 when you remove the mod, all prices should go back to vanilla values.
+
+
+Kudos to [u/dorin21](https://www.reddit.com/user/dorin21/) for sourcing a [resourceful dataset](https://www.reddit.com/r/CitiesSkylines2/comments/1p67ptr/adjusted_infrastructure_costs) to base the presets on!
         <!-- @formatter:on -->
     </LongDescription>
     <!--Thumbnail-->
@@ -40,7 +47,7 @@ when you remove the mod, all prices should go back to vanilla values.
     <!--Link to the forum post where the mod can be discussed-->
     <ForumLink Value=""/>
     <!--Version of the mod-->
-    <ModVersion Value="0.2.0"/>
+    <ModVersion Value="0.3.0"/>
     <!--Recommended version of the base game to use the mod-->
     <GameVersion Value="1.5.*"/>
     <!--Dependency for the mod, can be set multiple times-->
@@ -49,7 +56,13 @@ when you remove the mod, all prices should go back to vanilla values.
     <RequiredDLC Value=""/>
     <!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
     <ChangeLog>
-- working price &amp; upkeep modification of tram &amp; train tracks 
+        <!-- @formatter:off -->
+- rework settings UI to make it more readable
+- adjust presets based on data from [u/dorin21](https://www.reddit.com/user/dorin21/)
+- separate highway pricing/upkeep from normal roads
+- separate train, tram &amp; subway pricing/upkeep
+- remove upkeep from presets, add recommendation to not change it
+        <!-- @formatter:on -->
     </ChangeLog>
     <!--External link, can be set multiple times. supported types are "discord", "github", "youtube", "twitch", "x", "paypal", "patreon", "buymeacoffee", "kofi", "crowdin", "gitlab", "gofundme"-->
     <ExternalLink Type="github" Url="https://github.com/JokaJukka/PriceAdjuster"/>
