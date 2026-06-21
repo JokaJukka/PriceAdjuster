@@ -1,3 +1,5 @@
+using System;
+using Game.Net;
 using Game.Prefabs;
 using PriceAdjuster.Components;
 using Unity.Entities;
@@ -33,8 +35,26 @@ namespace PriceAdjuster.Systems.Logic
             RequireAnyForUpdate(InitialQuery, RecalcQuery);
         }
 
-        protected override float PriceCoefficient(TrackComposition detailData) => Mod.Settings.TrainTrackPriceMultiplier;
+        protected override float PriceCoefficient(TrackComposition detailData)
+        {
+            return detailData.m_TrackType switch
+            {
+                TrackTypes.Train => Mod.Settings.TrainTrackPriceMultiplier,
+                TrackTypes.Tram => Mod.Settings.TramTrackPriceMultiplier,
+                TrackTypes.Subway => Mod.Settings.SubwayTrackPriceMultiplier,
+                _ => 1f
+            };
+        }
 
-        protected override float UpkeepCoefficient(TrackComposition detailData) => Mod.Settings.TrainTrackUpkeepMultiplier;
+        protected override float UpkeepCoefficient(TrackComposition detailData)
+        {
+            return detailData.m_TrackType switch
+            {
+                TrackTypes.Train => Mod.Settings.TrainTrackUpkeepMultiplier,
+                TrackTypes.Tram => Mod.Settings.TramTrackUpkeepMultiplier,
+                TrackTypes.Subway => Mod.Settings.SubwayTrackUpkeepMultiplier,
+                _ => 1f
+            };
+        }
     }
 }
