@@ -18,14 +18,24 @@ namespace PriceAdjuster.Settings
         public float HighwayUpkeepMultiplier { get; set; } = 1f;
 
         [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction)]
-        [SettingsUISection(UpkeepTab, RoadTypeGroup)]
-        public float TrackUpkeepMultiplier { get; set; } = 1f;
+        [SettingsUISection(UpkeepTab, TrackTypeGroup)]
+        public float TrainTrackUpkeepMultiplier { get; set; } = 1f;
+
+        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction)]
+        [SettingsUISection(UpkeepTab, TrackTypeGroup)]
+        public float TramTrackUpkeepMultiplier { get; set; } = 1f;
+
+        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction)]
+        [SettingsUISection(UpkeepTab, TrackTypeGroup)]
+        public float SubwayTrackUpkeepMultiplier { get; set; } = 1f;
 
         private void ResetUpkeep()
         {
             RoadUpkeepMultiplier = 1f;
             HighwayUpkeepMultiplier = 1f;
-            TrackUpkeepMultiplier = 1f;
+            TrainTrackUpkeepMultiplier = 1f;
+            TramTrackUpkeepMultiplier = 1f;
+            SubwayTrackUpkeepMultiplier = 1f;
         }
     }
 }

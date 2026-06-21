@@ -15,7 +15,9 @@ namespace PriceAdjuster.Settings
 
         [SettingsUIHidden] public float CustomRoadPriceMultiplier { get; set; } = 1f;
         [SettingsUIHidden] public float CustomHighwayPriceMultiplier { get; set; } = 1f;
-        [SettingsUIHidden] public float CustomTrackPriceMultiplier { get; set; } = 1f;
+        [SettingsUIHidden] public float CustomTrainTrackPriceMultiplier { get; set; } = 1f;
+        [SettingsUIHidden] public float CustomTramTrackPriceMultiplier { get; set; } = 1f;
+        [SettingsUIHidden] public float CustomSubwayTrackPriceMultiplier { get; set; } = 1f;
 
         [SettingsUISection(PricesTab, PresetGroup)]
         public PresetsEnum Preset { get; set; }
@@ -73,9 +75,9 @@ namespace PriceAdjuster.Settings
         }
 
         [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction)]
-        [SettingsUISection(PricesTab, RoadTypeGroup)]
+        [SettingsUISection(PricesTab, TrackTypeGroup)]
         [SettingsUIDisableByCondition(typeof(PriceSettings), nameof(IsNotCustomPreset))]
-        public float TrackPriceMultiplier
+        public float TrainTrackPriceMultiplier
         {
             get
             {
@@ -84,14 +86,66 @@ namespace PriceAdjuster.Settings
                     PresetsEnum.Vanilla => 1f,
                     PresetsEnum.Balanced => 3f,
                     PresetsEnum.Realistic => 8f,
-                    _ => CustomTrackPriceMultiplier
+                    _ => CustomTrainTrackPriceMultiplier
                 };
             }
             set
             {
                 if (Preset == PresetsEnum.Custom)
                 {
-                    CustomTrackPriceMultiplier = value;
+                    CustomTrainTrackPriceMultiplier = value;
+                }
+
+                Mod.SchedulePriceRecalculation();
+            }
+        }
+
+        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction)]
+        [SettingsUISection(PricesTab, TrackTypeGroup)]
+        [SettingsUIDisableByCondition(typeof(PriceSettings), nameof(IsNotCustomPreset))]
+        public float TramTrackPriceMultiplier
+        {
+            get
+            {
+                return Preset switch
+                {
+                    PresetsEnum.Vanilla => 1f,
+                    PresetsEnum.Balanced => 3f,
+                    PresetsEnum.Realistic => 8f,
+                    _ => CustomTramTrackPriceMultiplier
+                };
+            }
+            set
+            {
+                if (Preset == PresetsEnum.Custom)
+                {
+                    CustomTramTrackPriceMultiplier = value;
+                }
+
+                Mod.SchedulePriceRecalculation();
+            }
+        }
+
+        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction)]
+        [SettingsUISection(PricesTab, TrackTypeGroup)]
+        [SettingsUIDisableByCondition(typeof(PriceSettings), nameof(IsNotCustomPreset))]
+        public float SubwayTrackPriceMultiplier
+        {
+            get
+            {
+                return Preset switch
+                {
+                    PresetsEnum.Vanilla => 1f,
+                    PresetsEnum.Balanced => 3f,
+                    PresetsEnum.Realistic => 8f,
+                    _ => CustomSubwayTrackPriceMultiplier
+                };
+            }
+            set
+            {
+                if (Preset == PresetsEnum.Custom)
+                {
+                    CustomSubwayTrackPriceMultiplier = value;
                 }
 
                 Mod.SchedulePriceRecalculation();
@@ -105,7 +159,9 @@ namespace PriceAdjuster.Settings
             Preset = PresetsEnum.Vanilla;
             CustomRoadPriceMultiplier = 1f;
             CustomHighwayPriceMultiplier = 1f;
-            CustomTrackPriceMultiplier = 1f;
+            CustomTrainTrackPriceMultiplier = 1f;
+            CustomTramTrackPriceMultiplier = 1f;
+            CustomSubwayTrackPriceMultiplier = 1f;
         }
     }
 }

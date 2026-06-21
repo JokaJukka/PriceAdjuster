@@ -28,7 +28,8 @@ namespace PriceAdjuster.Locale
                 },
                 { _settings.GetOptionTabLocaleID(PriceSettings.AdvancedTab), "Advanced" },
                 { _settings.GetOptionGroupLocaleID(PriceSettings.PresetGroup), "Presets" },
-                { _settings.GetOptionGroupLocaleID(PriceSettings.RoadTypeGroup), "Road Type" },
+                { _settings.GetOptionGroupLocaleID(PriceSettings.RoadTypeGroup), "Road settings" },
+                { _settings.GetOptionGroupLocaleID(PriceSettings.TrackTypeGroup), "Track settings" },
                 { _settings.GetOptionGroupLocaleID(PriceSettings.DebugGroup), "Debug" },
 
                 // Prices tab
@@ -62,12 +63,28 @@ namespace PriceAdjuster.Locale
                     "Sets the multiplier of a price of building highways. 1 equals to vanilla game settings."
                 },
                 {
-                    _settings.GetOptionLabelLocaleID(nameof(PriceSettings.TrackPriceMultiplier)),
-                    "Track price multiplier"
+                    _settings.GetOptionLabelLocaleID(nameof(PriceSettings.TrainTrackPriceMultiplier)),
+                    "Train track price multiplier"
                 },
                 {
-                    _settings.GetOptionDescLocaleID(nameof(PriceSettings.TrackPriceMultiplier)),
-                    "Sets the multiplier of a price of building tracks for trains & trams. 1 equals to vanilla game settings."
+                    _settings.GetOptionDescLocaleID(nameof(PriceSettings.TrainTrackPriceMultiplier)),
+                    "Sets the multiplier of a price of building train tracks. 1 equals to vanilla game settings."
+                },
+                {
+                    _settings.GetOptionLabelLocaleID(nameof(PriceSettings.TramTrackPriceMultiplier)),
+                    "Tram track price multiplier"
+                },
+                {
+                    _settings.GetOptionDescLocaleID(nameof(PriceSettings.TramTrackPriceMultiplier)),
+                    "Sets the multiplier of a price of building tram tracks. 1 equals to vanilla game settings."
+                },
+                {
+                    _settings.GetOptionLabelLocaleID(nameof(PriceSettings.SubwayTrackPriceMultiplier)),
+                    "Subway track price multiplier"
+                },
+                {
+                    _settings.GetOptionDescLocaleID(nameof(PriceSettings.SubwayTrackPriceMultiplier)),
+                    "Sets the multiplier of a price of building subway tracks. 1 equals to vanilla game settings."
                 },
 
                 // Upkeep tab
@@ -88,12 +105,28 @@ namespace PriceAdjuster.Locale
                     "Sets the multiplier of a price of maintaining highways. 1 equals to vanilla game settings."
                 },
                 {
-                    _settings.GetOptionLabelLocaleID(nameof(PriceSettings.TrackUpkeepMultiplier)),
-                    "Track upkeep multiplier"
+                    _settings.GetOptionLabelLocaleID(nameof(PriceSettings.TrainTrackUpkeepMultiplier)),
+                    "Train track upkeep multiplier"
                 },
                 {
-                    _settings.GetOptionDescLocaleID(nameof(PriceSettings.TrackUpkeepMultiplier)),
-                    "Sets the multiplier of a price of maintaining tracks for trains & trams. 1 equals to vanilla game settings."
+                    _settings.GetOptionDescLocaleID(nameof(PriceSettings.TrainTrackUpkeepMultiplier)),
+                    "Sets the multiplier of a price of maintaining train tracks. 1 equals to vanilla game settings."
+                },
+                {
+                    _settings.GetOptionLabelLocaleID(nameof(PriceSettings.TramTrackUpkeepMultiplier)),
+                    "Tram track upkeep multiplier"
+                },
+                {
+                    _settings.GetOptionDescLocaleID(nameof(PriceSettings.TramTrackUpkeepMultiplier)),
+                    "Sets the multiplier of a price of maintaining tram tracks. 1 equals to vanilla game settings."
+                },
+                {
+                    _settings.GetOptionLabelLocaleID(nameof(PriceSettings.SubwayTrackUpkeepMultiplier)),
+                    "Subway track upkeep multiplier"
+                },
+                {
+                    _settings.GetOptionDescLocaleID(nameof(PriceSettings.SubwayTrackUpkeepMultiplier)),
+                    "Sets the multiplier of a price of maintaining subway tracks. 1 equals to vanilla game settings."
                 },
 
                 // Advanced tab

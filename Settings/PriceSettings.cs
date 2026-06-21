@@ -15,7 +15,8 @@ namespace PriceAdjuster.Settings
         public const string AdvancedTab = "Advanced";
 
         public const string PresetGroup = "Presets";
-        public const string RoadTypeGroup = "Road Type";
+        public const string RoadTypeGroup = "Road settings";
+        public const string TrackTypeGroup = "Track settings";
         public const string DebugGroup = "Debug";
 
         public PriceSettings(IMod mod) : base(mod)

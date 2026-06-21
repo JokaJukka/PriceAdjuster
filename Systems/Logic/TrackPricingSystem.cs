@@ -33,8 +33,8 @@ namespace PriceAdjuster.Systems.Logic
             RequireAnyForUpdate(InitialQuery, RecalcQuery);
         }
 
-        protected override float PriceCoefficient(TrackComposition detailData) => Mod.Settings.TrackPriceMultiplier;
+        protected override float PriceCoefficient(TrackComposition detailData) => Mod.Settings.TrainTrackPriceMultiplier;
 
-        protected override float UpkeepCoefficient(TrackComposition detailData) => Mod.Settings.TrackUpkeepMultiplier;
+        protected override float UpkeepCoefficient(TrackComposition detailData) => Mod.Settings.TrainTrackUpkeepMultiplier;
     }
 }
