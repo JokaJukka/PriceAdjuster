@@ -15,11 +15,16 @@ namespace PriceAdjuster.Settings
 
         [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction)]
         [SettingsUISection(UpkeepTab, RoadTypeGroup)]
+        public float HighwayUpkeepMultiplier { get; set; } = 1f;
+
+        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction)]
+        [SettingsUISection(UpkeepTab, RoadTypeGroup)]
         public float TrackUpkeepMultiplier { get; set; } = 1f;
 
         private void ResetUpkeep()
         {
             RoadUpkeepMultiplier = 1f;
+            HighwayUpkeepMultiplier = 1f;
             TrackUpkeepMultiplier = 1f;
         }
     }

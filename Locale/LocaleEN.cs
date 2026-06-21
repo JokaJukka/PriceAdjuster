@@ -53,7 +53,14 @@ namespace PriceAdjuster.Locale
                     _settings.GetOptionDescLocaleID(nameof(PriceSettings.RoadPriceMultiplier)),
                     "Sets the multiplier of a price of building roads. 1 equals to vanilla game settings."
                 },
-
+                {
+                    _settings.GetOptionLabelLocaleID(nameof(PriceSettings.HighwayPriceMultiplier)),
+                    "Highway price multiplier"
+                },
+                {
+                    _settings.GetOptionDescLocaleID(nameof(PriceSettings.HighwayPriceMultiplier)),
+                    "Sets the multiplier of a price of building highways. 1 equals to vanilla game settings."
+                },
                 {
                     _settings.GetOptionLabelLocaleID(nameof(PriceSettings.TrackPriceMultiplier)),
                     "Track price multiplier"
@@ -71,6 +78,14 @@ namespace PriceAdjuster.Locale
                 {
                     _settings.GetOptionDescLocaleID(nameof(PriceSettings.RoadUpkeepMultiplier)),
                     "Sets the multiplier of a price of maintaining roads. 1 equals to vanilla game settings."
+                },
+                {
+                    _settings.GetOptionLabelLocaleID(nameof(PriceSettings.RoadUpkeepMultiplier)),
+                    "Highway upkeep multiplier"
+                },
+                {
+                    _settings.GetOptionDescLocaleID(nameof(PriceSettings.RoadUpkeepMultiplier)),
+                    "Sets the multiplier of a price of maintaining highways. 1 equals to vanilla game settings."
                 },
                 {
                     _settings.GetOptionLabelLocaleID(nameof(PriceSettings.TrackUpkeepMultiplier)),

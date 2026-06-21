@@ -14,6 +14,7 @@ namespace PriceAdjuster.Settings
         }
 
         [SettingsUIHidden] public float CustomRoadPriceMultiplier { get; set; } = 1f;
+        [SettingsUIHidden] public float CustomHighwayPriceMultiplier { get; set; } = 1f;
         [SettingsUIHidden] public float CustomTrackPriceMultiplier { get; set; } = 1f;
 
         [SettingsUISection(PricesTab, PresetGroup)]
@@ -39,6 +40,32 @@ namespace PriceAdjuster.Settings
                 if (Preset == PresetsEnum.Custom)
                 {
                     CustomRoadPriceMultiplier = value;
+                }
+
+                Mod.SchedulePriceRecalculation();
+            }
+        }
+
+        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction)]
+        [SettingsUISection(PricesTab, RoadTypeGroup)]
+        [SettingsUIDisableByCondition(typeof(PriceSettings), nameof(IsNotCustomPreset))]
+        public float HighwayPriceMultiplier
+        {
+            get
+            {
+                return Preset switch
+                {
+                    PresetsEnum.Vanilla => 1f,
+                    PresetsEnum.Balanced => 3f,
+                    PresetsEnum.Realistic => 8f,
+                    _ => CustomHighwayPriceMultiplier
+                };
+            }
+            set
+            {
+                if (Preset == PresetsEnum.Custom)
+                {
+                    CustomHighwayPriceMultiplier = value;
                 }
 
                 Mod.SchedulePriceRecalculation();
@@ -77,6 +104,7 @@ namespace PriceAdjuster.Settings
         {
             Preset = PresetsEnum.Vanilla;
             CustomRoadPriceMultiplier = 1f;
+            CustomHighwayPriceMultiplier = 1f;
             CustomTrackPriceMultiplier = 1f;
         }
     }
