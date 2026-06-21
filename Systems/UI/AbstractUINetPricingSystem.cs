@@ -10,15 +10,14 @@ namespace PriceAdjuster.Systems.UI
     /// <summary>
     ///     This class modifies just the pricing of networks in UI.
     /// </summary>
-    public abstract partial class AbstractUINetPricingSystem : GameSystemBase
+    public abstract partial class AbstractUINetPricingSystem<T> : GameSystemBase where T : unmanaged, IComponentData
     {
         protected EntityQuery InitialQuery;
         protected EntityQuery RecalcQuery;
 
-        protected abstract float PriceCoefficient();
+        protected abstract float PriceCoefficient(T detailData);
 
-        protected abstract float UpkeepCoefficient();
-
+        protected abstract float UpkeepCoefficient(T detailData);
 
         protected override void OnUpdate()
         {
@@ -30,13 +29,14 @@ namespace PriceAdjuster.Systems.UI
         {
             var entities = InitialQuery.ToEntityArray(Allocator.Temp);
             var entitiesData = InitialQuery.ToComponentDataArray<PlaceableNetData>(Allocator.Temp);
+            var entitiesDetailData = RecalcQuery.ToComponentDataArray<T>(Allocator.Temp);
 
             for (var i = 0; i < entitiesData.Length; i++)
             {
                 var entityData = entitiesData[i];
                 var originalPrices = new OriginalPlaceableNetProps(entityData.m_DefaultConstructionCost,
                     entityData.m_DefaultUpkeepCost);
-                entityData = UpdatePrices(entitiesData[i], originalPrices);
+                entityData = UpdatePrices(entitiesData[i], originalPrices, entitiesDetailData[i]);
 
                 EntityManager.AddComponentData(entities[i], originalPrices);
                 EntityManager.SetComponentData(entities[i], entityData);
@@ -51,10 +51,11 @@ namespace PriceAdjuster.Systems.UI
             var entities = RecalcQuery.ToEntityArray(Allocator.Temp);
             var entitiesData = RecalcQuery.ToComponentDataArray<PlaceableNetData>(Allocator.Temp);
             var entitiesOriginalPrices = RecalcQuery.ToComponentDataArray<OriginalPlaceableNetProps>(Allocator.Temp);
+            var entitiesDetailData = RecalcQuery.ToComponentDataArray<T>(Allocator.Temp);
 
             for (var i = 0; i < entitiesData.Length; i++)
             {
-                var entityData = UpdatePrices(entitiesData[i], entitiesOriginalPrices[i]);
+                var entityData = UpdatePrices(entitiesData[i], entitiesOriginalPrices[i], entitiesDetailData[i]);
 
                 EntityManager.RemoveComponent<ScheduledPriceRecalculation>(entities[i]);
                 EntityManager.SetComponentData(entities[i], entityData);
@@ -65,12 +66,12 @@ namespace PriceAdjuster.Systems.UI
         }
 
         private PlaceableNetData UpdatePrices(PlaceableNetData entityData,
-            OriginalPlaceableNetProps originalPlaceableValues)
+            OriginalPlaceableNetProps originalPlaceableValues, T detailData)
         {
-            var newPrice = originalPlaceableValues.OriginalPrice * PriceCoefficient();
+            var newPrice = originalPlaceableValues.OriginalPrice * PriceCoefficient(detailData);
             entityData.m_DefaultConstructionCost = MathUtils.ClampToUInt(newPrice);
 
-            var newUpkeep = originalPlaceableValues.OriginalUpkeep * UpkeepCoefficient();
+            var newUpkeep = originalPlaceableValues.OriginalUpkeep * UpkeepCoefficient(detailData);
             entityData.m_DefaultUpkeepCost = newUpkeep;
 
             Mod.log.Debug(

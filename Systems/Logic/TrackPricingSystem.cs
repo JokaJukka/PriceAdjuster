@@ -4,7 +4,7 @@ using Unity.Entities;
 
 namespace PriceAdjuster.Systems.Logic
 {
-    public partial class TrackPricingSystem : AbstractNetPricingSystem
+    public partial class TrackPricingSystem : AbstractNetPricingSystem<TrackComposition>
     {
         protected override void OnCreate()
         {
@@ -33,8 +33,8 @@ namespace PriceAdjuster.Systems.Logic
             RequireAnyForUpdate(InitialQuery, RecalcQuery);
         }
 
-        protected override float PriceCoefficient() => Mod.Settings.TrackPriceMultiplier;
+        protected override float PriceCoefficient(TrackComposition detailData) => Mod.Settings.TrackPriceMultiplier;
 
-        protected override float UpkeepCoefficient() => Mod.Settings.TrackUpkeepMultiplier;
+        protected override float UpkeepCoefficient(TrackComposition detailData) => Mod.Settings.TrackUpkeepMultiplier;
     }
 }

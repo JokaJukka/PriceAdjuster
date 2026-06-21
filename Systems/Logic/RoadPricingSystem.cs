@@ -4,7 +4,7 @@ using Unity.Entities;
 
 namespace PriceAdjuster.Systems.Logic
 {
-    public partial class RoadPricingSystem : AbstractNetPricingSystem
+    public partial class RoadPricingSystem : AbstractNetPricingSystem<RoadComposition>
     {
         protected override void OnCreate()
         {
@@ -33,8 +33,18 @@ namespace PriceAdjuster.Systems.Logic
             RequireAnyForUpdate(InitialQuery, RecalcQuery);
         }
 
-        protected override float PriceCoefficient() => Mod.Settings.RoadPriceMultiplier;
+        protected override float PriceCoefficient(RoadComposition detailData)
+        {
+            return (detailData.m_Flags & RoadFlags.UseHighwayRules) != 0
+                ? Mod.Settings.HighwayPriceMultiplier
+                : Mod.Settings.RoadPriceMultiplier;
+        }
 
-        protected override float UpkeepCoefficient() => Mod.Settings.RoadUpkeepMultiplier;
+        protected override float UpkeepCoefficient(RoadComposition detailData)
+        {
+            return (detailData.m_Flags & RoadFlags.UseHighwayRules) != 0
+                ? Mod.Settings.HighwayUpkeepMultiplier
+                : Mod.Settings.RoadUpkeepMultiplier;
+        }
     }
 }
