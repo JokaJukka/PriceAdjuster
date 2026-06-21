@@ -80,11 +80,11 @@ namespace PriceAdjuster.Locale
                     "Sets the multiplier of a price of maintaining roads. 1 equals to vanilla game settings."
                 },
                 {
-                    _settings.GetOptionLabelLocaleID(nameof(PriceSettings.RoadUpkeepMultiplier)),
+                    _settings.GetOptionLabelLocaleID(nameof(PriceSettings.HighwayUpkeepMultiplier)),
                     "Highway upkeep multiplier"
                 },
                 {
-                    _settings.GetOptionDescLocaleID(nameof(PriceSettings.RoadUpkeepMultiplier)),
+                    _settings.GetOptionDescLocaleID(nameof(PriceSettings.HighwayUpkeepMultiplier)),
                     "Sets the multiplier of a price of maintaining highways. 1 equals to vanilla game settings."
                 },
                 {
