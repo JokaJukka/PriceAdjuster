@@ -22,7 +22,7 @@ namespace PriceAdjuster.Settings
         [SettingsUISection(PricesTab, PresetGroup)]
         public PresetsEnum Preset { get; set; }
 
-        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction)]
+        [SettingsUISlider(min = 0.5f, max = 20f, step = 0.25f, unit = Unit.kFloatTwoFractions)]
         [SettingsUISection(PricesTab, RoadTypeGroup)]
         [SettingsUIDisableByCondition(typeof(PriceSettings), nameof(IsNotCustomPreset))]
         public float RoadPriceMultiplier
@@ -32,8 +32,8 @@ namespace PriceAdjuster.Settings
                 return Preset switch
                 {
                     PresetsEnum.Vanilla => 1f,
-                    PresetsEnum.Balanced => 3f,
-                    PresetsEnum.Realistic => 8f,
+                    PresetsEnum.Balanced => 2.5f,
+                    PresetsEnum.Realistic => 6f,
                     _ => CustomRoadPriceMultiplier
                 };
             }
@@ -48,7 +48,7 @@ namespace PriceAdjuster.Settings
             }
         }
 
-        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction)]
+        [SettingsUISlider(min = 0.5f, max = 20f, step = 0.25f, unit = Unit.kFloatTwoFractions)]
         [SettingsUISection(PricesTab, RoadTypeGroup)]
         [SettingsUIDisableByCondition(typeof(PriceSettings), nameof(IsNotCustomPreset))]
         public float HighwayPriceMultiplier
@@ -58,8 +58,8 @@ namespace PriceAdjuster.Settings
                 return Preset switch
                 {
                     PresetsEnum.Vanilla => 1f,
-                    PresetsEnum.Balanced => 3f,
-                    PresetsEnum.Realistic => 8f,
+                    PresetsEnum.Balanced => 8f,
+                    PresetsEnum.Realistic => 20f,
                     _ => CustomHighwayPriceMultiplier
                 };
             }
@@ -74,7 +74,7 @@ namespace PriceAdjuster.Settings
             }
         }
 
-        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction)]
+        [SettingsUISlider(min = 0.5f, max = 20f, step = 0.25f, unit = Unit.kFloatTwoFractions)]
         [SettingsUISection(PricesTab, TrackTypeGroup)]
         [SettingsUIDisableByCondition(typeof(PriceSettings), nameof(IsNotCustomPreset))]
         public float TrainTrackPriceMultiplier
@@ -84,8 +84,8 @@ namespace PriceAdjuster.Settings
                 return Preset switch
                 {
                     PresetsEnum.Vanilla => 1f,
-                    PresetsEnum.Balanced => 3f,
-                    PresetsEnum.Realistic => 8f,
+                    PresetsEnum.Balanced => 5f,
+                    PresetsEnum.Realistic => 12f,
                     _ => CustomTrainTrackPriceMultiplier
                 };
             }
@@ -100,7 +100,7 @@ namespace PriceAdjuster.Settings
             }
         }
 
-        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction)]
+        [SettingsUISlider(min = 0.5f, max = 20f, step = 0.25f, unit = Unit.kFloatTwoFractions)]
         [SettingsUISection(PricesTab, TrackTypeGroup)]
         [SettingsUIDisableByCondition(typeof(PriceSettings), nameof(IsNotCustomPreset))]
         public float TramTrackPriceMultiplier
@@ -110,8 +110,8 @@ namespace PriceAdjuster.Settings
                 return Preset switch
                 {
                     PresetsEnum.Vanilla => 1f,
-                    PresetsEnum.Balanced => 3f,
-                    PresetsEnum.Realistic => 8f,
+                    PresetsEnum.Balanced => 8f,
+                    PresetsEnum.Realistic => 20f,
                     _ => CustomTramTrackPriceMultiplier
                 };
             }
@@ -126,7 +126,7 @@ namespace PriceAdjuster.Settings
             }
         }
 
-        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction)]
+        [SettingsUISlider(min = 0.5f, max = 20f, step = 0.25f, unit = Unit.kFloatTwoFractions)]
         [SettingsUISection(PricesTab, TrackTypeGroup)]
         [SettingsUIDisableByCondition(typeof(PriceSettings), nameof(IsNotCustomPreset))]
         public float SubwayTrackPriceMultiplier
@@ -136,8 +136,8 @@ namespace PriceAdjuster.Settings
                 return Preset switch
                 {
                     PresetsEnum.Vanilla => 1f,
-                    PresetsEnum.Balanced => 3f,
-                    PresetsEnum.Realistic => 8f,
+                    PresetsEnum.Balanced => 8f,
+                    PresetsEnum.Realistic => 20f,
                     _ => CustomSubwayTrackPriceMultiplier
                 };
             }

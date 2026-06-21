@@ -9,23 +9,23 @@ namespace PriceAdjuster.Settings
         [SettingsUISection(UpkeepTab, RoadTypeGroup)]
         public string UpkeepNotes => string.Empty;
 
-        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction)]
+        [SettingsUISlider(min = 0.5f, max = 5f, step = 0.25f, unit = Unit.kFloatTwoFractions)]
         [SettingsUISection(UpkeepTab, RoadTypeGroup)]
         public float RoadUpkeepMultiplier { get; set; } = 1f;
 
-        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction)]
+        [SettingsUISlider(min = 0.5f, max = 5f, step = 0.25f, unit = Unit.kFloatTwoFractions)]
         [SettingsUISection(UpkeepTab, RoadTypeGroup)]
         public float HighwayUpkeepMultiplier { get; set; } = 1f;
 
-        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction)]
+        [SettingsUISlider(min = 0.5f, max = 5f, step = 0.25f, unit = Unit.kFloatTwoFractions)]
         [SettingsUISection(UpkeepTab, TrackTypeGroup)]
         public float TrainTrackUpkeepMultiplier { get; set; } = 1f;
 
-        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction)]
+        [SettingsUISlider(min = 0.5f, max = 5f, step = 0.25f, unit = Unit.kFloatTwoFractions)]
         [SettingsUISection(UpkeepTab, TrackTypeGroup)]
         public float TramTrackUpkeepMultiplier { get; set; } = 1f;
 
-        [SettingsUISlider(min = 0.1f, max = 10f, step = 0.1f, scalarMultiplier = 1, unit = Unit.kFloatSingleFraction)]
+        [SettingsUISlider(min = 0.5f, max = 5f, step = 0.25f, unit = Unit.kFloatTwoFractions)]
         [SettingsUISection(UpkeepTab, TrackTypeGroup)]
         public float SubwayTrackUpkeepMultiplier { get; set; } = 1f;
 
