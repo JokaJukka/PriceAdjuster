@@ -29,7 +29,7 @@ namespace PriceAdjuster.Systems.Logic
         {
             var entities = InitialQuery.ToEntityArray(Allocator.Temp);
             var entitiesData = InitialQuery.ToComponentDataArray<PlaceableNetComposition>(Allocator.Temp);
-            var entitiesDetailData = RecalcQuery.ToComponentDataArray<T>(Allocator.Temp);
+            var entitiesDetailData = InitialQuery.ToComponentDataArray<T>(Allocator.Temp);
 
             for (var i = 0; i < entitiesData.Length; i++)
             {
