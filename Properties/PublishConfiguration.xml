@@ -47,9 +47,9 @@ Kudos to [u/dorin21](https://www.reddit.com/user/dorin21/) for sourcing a [resou
     <!--Link to the forum post where the mod can be discussed-->
     <ForumLink Value=""/>
     <!--Version of the mod-->
-    <ModVersion Value="0.3.0"/>
+    <ModVersion Value="0.3.1"/>
     <!--Recommended version of the base game to use the mod-->
-    <GameVersion Value="1.5.*"/>
+    <GameVersion Value="1.6.*"/>
     <!--Dependency for the mod, can be set multiple times-->
     <Dependency Id=""/>
     <!--Required DLC, can be set multiple times. Supported values are "Landmark Buildings", "San Fransisco Set", "Beach Properties", "Urban Promenades", "Modern Architecture"-->
@@ -57,11 +57,7 @@ Kudos to [u/dorin21](https://www.reddit.com/user/dorin21/) for sourcing a [resou
     <!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
     <ChangeLog>
         <!-- @formatter:off -->
-- rework settings UI to make it more readable
-- adjust presets based on data from [u/dorin21](https://www.reddit.com/user/dorin21/)
-- separate highway pricing/upkeep from normal roads
-- separate train, tram &amp; subway pricing/upkeep
-- remove upkeep from presets, add recommendation to not change it
+- bump game dependency to 1.6.*
         <!-- @formatter:on -->
     </ChangeLog>
     <!--External link, can be set multiple times. supported types are "discord", "github", "youtube", "twitch", "x", "paypal", "patreon", "buymeacoffee", "kofi", "crowdin", "gitlab", "gofundme"-->
