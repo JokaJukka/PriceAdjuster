@@ -2,7 +2,7 @@ using System;
 
 namespace PriceAdjuster.Utils
 {
-    public class MathUtils
+    public static class MathUtils
     {
         public static uint ClampToUInt(float value)
         {
