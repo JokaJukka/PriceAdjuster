@@ -19,14 +19,14 @@ namespace PriceAdjuster.Systems.Net.UI
         private EntityQuery _initialQuery;
         private EntityQuery _recalcQuery;
         private BufferLookup<SubNet> _subNetLookup;
-        private ComponentLookup<PlaceableNetComposition> _compositionLookup;
+        private ComponentLookup<PlaceableNetData> _placeableNetDataLookup;
 
         protected override void OnCreate()
         {
             base.OnCreate();
 
             _subNetLookup = GetBufferLookup<SubNet>(true);
-            _compositionLookup = GetComponentLookup<PlaceableNetComposition>(true);
+            _placeableNetDataLookup = GetComponentLookup<PlaceableNetData>(true);
 
             _initialQuery = GetEntityQuery(new EntityQueryDesc
             {
@@ -111,20 +111,13 @@ namespace PriceAdjuster.Systems.Net.UI
             {
                 var subNet = subNetBuffer[i];
 
-                if (!_compositionLookup.TryGetComponent(subNet.m_Prefab, out var composition))
+                if (!_placeableNetDataLookup.TryGetComponent(subNet.m_Prefab, out var placeableNetData))
                     continue;
-
+                
                 var length = Colossal.Mathematics.MathUtils.Length(subNet.m_Curve);
-                var curve = new Curve
-                {
-                    m_Bezier = subNet.m_Curve,
-                    m_Length = length
-                };
+                var segments = math.max(1, math.round(length / 8f));
 
-                var startElevation = new Elevation(new float2(subNet.m_Curve.a.y, subNet.m_Curve.a.y));
-                var endElevation = new Elevation(new float2(subNet.m_Curve.d.y, subNet.m_Curve.d.y));
-
-                totalCost += (uint)NetUtils.GetConstructionCost(curve, startElevation, endElevation, composition);
+                totalCost += MathUtils.ClampToUInt(segments * placeableNetData.m_DefaultConstructionCost);
             }
 
             return totalCost;
