@@ -99,7 +99,11 @@ namespace PriceAdjuster.Systems.Net.UI
         private uint CalculateInterchangeCost(Entity entity)
         {
             if (!_subNetLookup.TryGetBuffer(entity, out var subNetBuffer))
+            {
+                Mod.log.Warn("Failed to get subnet buffer!");
                 return 0;
+            }
+            Mod.log.Info($"Calculating subnet price from {subNetBuffer.Length} elements");
 
             uint totalCost = 0;
 
