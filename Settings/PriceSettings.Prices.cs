@@ -79,8 +79,8 @@ namespace PriceAdjuster.Settings
                 return Preset switch
                 {
                     PresetsEnum.Vanilla => 1f,
-                    PresetsEnum.Balanced => 6f,
-                    PresetsEnum.Realistic => 15f,
+                    PresetsEnum.Balanced => 2f,
+                    PresetsEnum.Realistic => 5f,
                     _ => CustomRoundaboutPriceMultiplier
                 };
             }
