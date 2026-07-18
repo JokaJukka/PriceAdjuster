@@ -16,7 +16,6 @@ namespace PriceAdjuster.Settings
         [SettingsUIHidden] public float CustomRoadPriceMultiplier { get; set; } = 1f;
         [SettingsUIHidden] public float CustomHighwayPriceMultiplier { get; set; } = 1f;
         [SettingsUIHidden] public float CustomRoundaboutPriceMultiplier { get; set; } = 1f;
-        [SettingsUIHidden] public float CustomCulDeSacPriceMultiplier { get; set; } = 1f;
         [SettingsUIHidden] public float CustomTrainTrackPriceMultiplier { get; set; } = 1f;
         [SettingsUIHidden] public float CustomTramTrackPriceMultiplier { get; set; } = 1f;
         [SettingsUIHidden] public float CustomSubwayTrackPriceMultiplier { get; set; } = 1f;
@@ -96,32 +95,6 @@ namespace PriceAdjuster.Settings
                 if (Preset == PresetsEnum.Custom)
                 {
                     CustomRoundaboutPriceMultiplier = value;
-                }
-
-                Mod.SchedulePriceRecalculation();
-            }
-        }
-
-        [SettingsUISlider(min = 0.5f, max = 20f, step = 0.25f, unit = Unit.kFloatTwoFractions)]
-        [SettingsUISection(PricesTab, RoadTypeGroup)]
-        [SettingsUIDisableByCondition(typeof(PriceSettings), nameof(IsNotCustomPreset))]
-        public float CulDeSacPriceMultiplier
-        {
-            get
-            {
-                return Preset switch
-                {
-                    PresetsEnum.Vanilla => 1f,
-                    PresetsEnum.Balanced => 4f,
-                    PresetsEnum.Realistic => 10f,
-                    _ => CustomCulDeSacPriceMultiplier
-                };
-            }
-            set
-            {
-                if (Preset == PresetsEnum.Custom)
-                {
-                    CustomCulDeSacPriceMultiplier = value;
                 }
 
                 Mod.SchedulePriceRecalculation();
@@ -214,7 +187,6 @@ namespace PriceAdjuster.Settings
             CustomRoadPriceMultiplier = 1f;
             CustomHighwayPriceMultiplier = 1f;
             CustomRoundaboutPriceMultiplier = 1f;
-            CustomCulDeSacPriceMultiplier = 1f;
             CustomTrainTrackPriceMultiplier = 1f;
             CustomTramTrackPriceMultiplier = 1f;
             CustomSubwayTrackPriceMultiplier = 1f;

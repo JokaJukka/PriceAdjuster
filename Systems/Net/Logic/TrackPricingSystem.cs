@@ -1,10 +1,9 @@
-using System;
 using Game.Net;
 using Game.Prefabs;
 using PriceAdjuster.Components;
 using Unity.Entities;
 
-namespace PriceAdjuster.Systems.Logic
+namespace PriceAdjuster.Systems.Net.Logic
 {
     public partial class TrackPricingSystem : AbstractNetPricingSystem<TrackComposition>
     {
@@ -35,7 +34,7 @@ namespace PriceAdjuster.Systems.Logic
             RequireAnyForUpdate(InitialQuery, RecalcQuery);
         }
 
-        protected override float PriceCoefficient(Entity entity, TrackComposition detailData)
+        protected override float PriceCoefficient(TrackComposition detailData)
         {
             return detailData.m_TrackType switch
             {
@@ -46,7 +45,7 @@ namespace PriceAdjuster.Systems.Logic
             };
         }
 
-        protected override float UpkeepCoefficient(Entity entity, TrackComposition detailData)
+        protected override float UpkeepCoefficient(TrackComposition detailData)
         {
             return detailData.m_TrackType switch
             {

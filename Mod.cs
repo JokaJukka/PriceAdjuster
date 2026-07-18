@@ -6,8 +6,8 @@ using Game.SceneFlow;
 using PriceAdjuster.Components;
 using PriceAdjuster.Locale;
 using PriceAdjuster.Settings;
-using PriceAdjuster.Systems.Logic;
-using PriceAdjuster.Systems.UI;
+using PriceAdjuster.Systems.Net.Logic;
+using PriceAdjuster.Systems.Net.UI;
 using Unity.Collections;
 using Unity.Entities;
 

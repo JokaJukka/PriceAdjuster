@@ -5,19 +5,17 @@ using PriceAdjuster.Utils;
 using Unity.Collections;
 using Unity.Entities;
 
-namespace PriceAdjuster.Systems.Logic
+namespace PriceAdjuster.Systems.Prefab
 {
     /// <summary>
-    ///     This class is a template for modifying the pricing of existing & to-be created networks.
+    ///     This class serves as template for modifying pricing of prefabs.
     /// </summary>
-    public abstract partial class AbstractNetPricingSystem<T> : GameSystemBase where T : unmanaged, IComponentData
+    public abstract partial class AbstractPrefabPricingSystem<T> : GameSystemBase where T : unmanaged, IComponentData
     {
         protected EntityQuery InitialQuery;
         protected EntityQuery RecalcQuery;
 
-        protected abstract float PriceCoefficient(Entity entity, T detailData);
-
-        protected abstract float UpkeepCoefficient(Entity entity, T detailData);
+        protected abstract float PriceCoefficient(PlaceableObjectData objectData, T detailData);
 
         protected override void OnUpdate()
         {
@@ -28,15 +26,14 @@ namespace PriceAdjuster.Systems.Logic
         private void InitializeNewPrices()
         {
             var entities = InitialQuery.ToEntityArray(Allocator.Temp);
-            var entitiesData = InitialQuery.ToComponentDataArray<PlaceableNetComposition>(Allocator.Temp);
+            var entitiesData = InitialQuery.ToComponentDataArray<PlaceableObjectData>(Allocator.Temp);
             var entitiesDetailData = InitialQuery.ToComponentDataArray<T>(Allocator.Temp);
 
             for (var i = 0; i < entitiesData.Length; i++)
             {
                 var entityData = entitiesData[i];
-                var originalPrices =
-                    new OriginalPlaceableNetProps(entityData.m_ConstructionCost, entityData.m_UpkeepCost);
-                entityData = UpdatePrices(entities[i], entitiesData[i], originalPrices, entitiesDetailData[i]);
+                var originalPrices = new OriginalPlaceableNetProps(entityData.m_ConstructionCost, 0);
+                entityData = UpdatePrices(entitiesData[i], originalPrices, entitiesDetailData[i]);
 
                 EntityManager.AddComponentData(entities[i], originalPrices);
                 EntityManager.SetComponentData(entities[i], entityData);
@@ -49,13 +46,13 @@ namespace PriceAdjuster.Systems.Logic
         private void RecalculatePrices()
         {
             var entities = RecalcQuery.ToEntityArray(Allocator.Temp);
-            var entitiesData = RecalcQuery.ToComponentDataArray<PlaceableNetComposition>(Allocator.Temp);
+            var entitiesData = RecalcQuery.ToComponentDataArray<PlaceableObjectData>(Allocator.Temp);
             var entitiesOriginalPrices = RecalcQuery.ToComponentDataArray<OriginalPlaceableNetProps>(Allocator.Temp);
             var entitiesDetailData = RecalcQuery.ToComponentDataArray<T>(Allocator.Temp);
 
             for (var i = 0; i < entitiesData.Length; i++)
             {
-                var entityData = UpdatePrices(entities[i], entitiesData[i], entitiesOriginalPrices[i], entitiesDetailData[i]);
+                var entityData = UpdatePrices(entitiesData[i], entitiesOriginalPrices[i], entitiesDetailData[i]);
 
                 EntityManager.RemoveComponent<ScheduledPriceRecalculation>(entities[i]);
                 EntityManager.SetComponentData(entities[i], entityData);
@@ -65,17 +62,13 @@ namespace PriceAdjuster.Systems.Logic
             entitiesData.Dispose();
         }
 
-        private PlaceableNetComposition UpdatePrices(Entity entity, PlaceableNetComposition entityData,
+        private PlaceableObjectData UpdatePrices(PlaceableObjectData entityData,
             OriginalPlaceableNetProps originalPlaceableValues, T detailData)
         {
-            var newPrice = originalPlaceableValues.OriginalPrice * PriceCoefficient(entity, detailData);
+            var newPrice = originalPlaceableValues.OriginalPrice * PriceCoefficient(entityData, detailData);
             entityData.m_ConstructionCost = MathUtils.ClampToUInt(newPrice);
 
-            var newUpkeep = originalPlaceableValues.OriginalUpkeep * UpkeepCoefficient(entity, detailData);
-            entityData.m_UpkeepCost = newUpkeep;
-
-            Mod.log.Debug(
-                $"Price: {originalPlaceableValues.OriginalPrice} -> {newPrice}; Upkeep: {originalPlaceableValues.OriginalUpkeep} -> {newUpkeep}");
+            Mod.log.Debug($"Price: {originalPlaceableValues.OriginalPrice} -> {newPrice}");
 
             return entityData;
         }
