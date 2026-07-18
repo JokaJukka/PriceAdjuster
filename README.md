@@ -1,6 +1,6 @@
 # PriceAdjuster
 
-Cities Skylines II mod that adjusts road and track construction costs and upkeep via configurable multipliers.
+Cities Skylines II mod that adjusts road, track, and prefab construction costs and upkeep via configurable multipliers.
 
 ## Building the mod
 
@@ -19,21 +19,31 @@ The same applies when publishing the mod to PDX mods.
 
 ## Architecture
 
-### Dual system design
+### Network pricing system & its dual design
 
-CS2 uses separate ECS components for simulation/network building data and UI display data. The mod mirrors its logic
-across both:
+CS2 uses for networks separate ECS components for simulation/building data and UI display data. The mod mirrors this
+logic across both:
 
-- **Logic systems** modify `PlaceableNetComposition` -- the component backing actual in-game network costs (
+- **Net logic systems** modify `PlaceableNetComposition` -- the component backing actual in-game network costs (
   `m_ConstructionCost`, `m_UpkeepCost`).
-- **UI systems** modify `PlaceableNetData` -- the component shown in build menus and info panels (
+- **Net UI systems** modify `PlaceableNetData` -- the component shown in build menus and info panels (
   `m_DefaultConstructionCost`, `m_DefaultUpkeepCost`).
 
 Both system pairs use identical classification logic and multiplier application.
 
+### Prefab pricing system
+
+Roundabouts and cul-de-sacs are not networks but placeable prefabs. The mod handles these through a separate prefab
+pricing system:
+
+- **Prefab systems** modify `PlaceableObjectData` (`m_ConstructionCost`) on entities that have `NetObjectData`.
+  Classification is based on `CompositionFlags.General.Roundabout`, which covers both roundabouts and cul-de-sacs.
+
+This system uses the same non-destructive snapshot and deferred recalculation approach as the net systems.
+
 ### Non-destructive modification
 
-When the mod first encounters a network entity, it snapshots the original `m_ConstructionCost` and `m_UpkeepCost` into
+When the mod first encounters a network or prefab entity, it snapshots the original `m_ConstructionCost` and `m_UpkeepCost` into
 an `OriginalPlaceableNetProps` component attached to that entity. All subsequent price calculations are always
 `original * multiplier`, never accumulated. Removing the mod causes the ECS systems to stop running, leaving entities
 with their original values intact since the mod never persists changes to disk.
@@ -84,14 +94,16 @@ To add a new language, create a class implementing `IDictionarySource` with tran
 
 ### Game components (read/modified)
 
-| Component                 | Namespace      | Fields                                                                                 | Usage                                                                             |
-|---------------------------|----------------|----------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
-| `PlaceableNetComposition` | `Game.Prefabs` | `m_ConstructionCost` (uint), `m_UpkeepCost` (float)                                    | **Modified.** Simulation-side network cost data.                                  |
-| `PlaceableNetData`        | `Game.Prefabs` | `m_DefaultConstructionCost` (uint), `m_DefaultUpkeepCost` (float), `m_SetUpgradeFlags` | **Modified** (cost fields) / **Read** (flags). UI-side network cost and metadata. |
-| `RoadComposition`         | `Game.Prefabs` | `m_Flags`                                                                              | **Read.** `RoadFlags.UseHighwayRules` distinguishes highways from regular roads.  |
-| `TrackComposition`        | `Game.Prefabs` | `m_TrackType`                                                                          | **Read.** `TrackTypes` enum distinguishes train/tram/subway.                      |
-| `RoadData`                | `Game.Prefabs` | `m_Flags`                                                                              | **Read.** UI-side equivalent of `RoadComposition` for the same highway check.     |
-| `TrackData`               | `Game.Net`     | `m_TrackType`                                                                          | **Read.** UI-side equivalent of `TrackComposition` for track type checks.         |
+| Component                 | Namespace      | Fields                                                                                 | Usage                                                                                                                                             |
+|---------------------------|----------------|----------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+| `PlaceableNetComposition` | `Game.Prefabs` | `m_ConstructionCost` (uint), `m_UpkeepCost` (float)                                    | **Modified.** Simulation-side network cost data.                                                                                                  |
+| `PlaceableNetData`        | `Game.Prefabs` | `m_DefaultConstructionCost` (uint), `m_DefaultUpkeepCost` (float), `m_SetUpgradeFlags` | **Modified** (cost fields) / **Read** (flags). UI-side network cost and metadata.                                                                 |
+| `PlaceableObjectData`     | `Game.Prefabs` | `m_ConstructionCost` (uint)                                                            | **Modified.** Prefab construction cost data. Used by the prefab pricing system for roundabouts and cul-de-sacs.                                   |
+| `NetObjectData`           | `Game.Prefabs` | `m_CompositionFlags`                                                                   | **Read.** `CompositionFlags.General.Roundabout` distinguishes roundabouts/cul-de-sacs from other prefabs.                                         |
+| `RoadComposition`         | `Game.Prefabs` | `m_Flags`                                                                              | **Read.** `RoadFlags.UseHighwayRules` distinguishes highways from regular roads.                                                                  |
+| `TrackComposition`        | `Game.Prefabs` | `m_TrackType`                                                                          | **Read.** `TrackTypes` enum distinguishes train/tram/subway.                                                                                      |
+| `RoadData`                | `Game.Prefabs` | `m_Flags`                                                                              | **Read.** UI-side equivalent of `RoadComposition` for the same highway check.                                                                     |
+| `TrackData`               | `Game.Net`     | `m_TrackType`                                                                          | **Read.** UI-side equivalent of `TrackComposition` for track type checks.                                                                         |
 
 ### Custom components (added by mod)
 
