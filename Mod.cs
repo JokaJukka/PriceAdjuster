@@ -3,6 +3,7 @@ using Colossal.Logging;
 using Game;
 using Game.Modding;
 using Game.SceneFlow;
+using Game.UI;
 using PriceAdjuster.Components;
 using PriceAdjuster.Locale;
 using PriceAdjuster.Settings;
@@ -25,8 +26,6 @@ namespace PriceAdjuster
 
         public void OnLoad(UpdateSystem updateSystem)
         {
-            log.Info(nameof(OnLoad));
-
             if (GameManager.instance.modManager.TryGetExecutableAsset(this, out var asset))
                 log.Info($"Current mod asset at {asset.path}");
 
@@ -44,6 +43,10 @@ namespace PriceAdjuster
             // Net Logic updates
             updateSystem.UpdateAt<RoadPricingSystem>(SystemUpdatePhase.Modification1);
             updateSystem.UpdateAt<TrackPricingSystem>(SystemUpdatePhase.Modification1);
+
+            // Interchange pricing (must be after net logic systems to use adjusted PlaceableNetComposition)
+            // updateSystem.UpdateAt<InterchangePricingSystem>(SystemUpdatePhase.Modification2);
+
             // Net UI updates
             updateSystem.UpdateAt<UIRoadPricingSystem>(SystemUpdatePhase.Modification1);
             updateSystem.UpdateAt<UITrackPricingSystem>(SystemUpdatePhase.Modification1);
@@ -64,7 +67,8 @@ namespace PriceAdjuster
             var query = _entityManager.CreateEntityQuery(ComponentType.ReadOnly<OriginalPlaceableNetProps>());
             var entities = query.ToEntityArray(Allocator.Temp);
 
-            log.Info($"Scheduling price recalculation for {entities.Length} entities!");
+            if (entities.Length > 0)
+                log.Info($"Scheduling price recalculation for {entities.Length} entities!");
 
             foreach (var entity in entities) _entityManager.AddComponent<ScheduledPriceRecalculation>(entity);
 
