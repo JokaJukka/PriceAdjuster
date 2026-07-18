@@ -33,7 +33,8 @@ namespace PriceAdjuster.Systems.Net.UI
             RequireAnyForUpdate(InitialQuery, RecalcQuery);
         }
 
-        protected override float PriceCoefficient(RoadData detailData){
+        protected override float PriceCoefficient(RoadData detailData)
+        {
             return (detailData.m_Flags & RoadFlags.UseHighwayRules) != 0
                 ? Mod.Settings.HighwayPriceMultiplier
                 : Mod.Settings.RoadPriceMultiplier;

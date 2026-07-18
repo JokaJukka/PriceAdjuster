@@ -8,6 +8,7 @@ using PriceAdjuster.Locale;
 using PriceAdjuster.Settings;
 using PriceAdjuster.Systems.Net.Logic;
 using PriceAdjuster.Systems.Net.UI;
+using PriceAdjuster.Systems.Prefab;
 using Unity.Collections;
 using Unity.Entities;
 
@@ -37,10 +38,13 @@ namespace PriceAdjuster
 
             AssetDatabase.global.LoadSettings(nameof(PriceAdjuster), Settings);
 
-            // Building updates
+            // Prefab updates
+            updateSystem.UpdateAt<NetObjectPricingSystem>(SystemUpdatePhase.Modification1);
+
+            // Net Logic updates
             updateSystem.UpdateAt<RoadPricingSystem>(SystemUpdatePhase.Modification1);
             updateSystem.UpdateAt<TrackPricingSystem>(SystemUpdatePhase.Modification1);
-            // UI updates
+            // Net UI updates
             updateSystem.UpdateAt<UIRoadPricingSystem>(SystemUpdatePhase.Modification1);
             updateSystem.UpdateAt<UITrackPricingSystem>(SystemUpdatePhase.Modification1);
         }

@@ -79,6 +79,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Systems\Net\" />
+        <Folder Include="Systems\Net\"/>
     </ItemGroup>
 </Project>

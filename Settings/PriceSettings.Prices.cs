@@ -40,10 +40,7 @@ namespace PriceAdjuster.Settings
             }
             set
             {
-                if (Preset == PresetsEnum.Custom)
-                {
-                    CustomRoadPriceMultiplier = value;
-                }
+                if (Preset == PresetsEnum.Custom) CustomRoadPriceMultiplier = value;
 
                 Mod.SchedulePriceRecalculation();
             }
@@ -66,10 +63,7 @@ namespace PriceAdjuster.Settings
             }
             set
             {
-                if (Preset == PresetsEnum.Custom)
-                {
-                    CustomHighwayPriceMultiplier = value;
-                }
+                if (Preset == PresetsEnum.Custom) CustomHighwayPriceMultiplier = value;
 
                 Mod.SchedulePriceRecalculation();
             }
@@ -92,10 +86,7 @@ namespace PriceAdjuster.Settings
             }
             set
             {
-                if (Preset == PresetsEnum.Custom)
-                {
-                    CustomRoundaboutPriceMultiplier = value;
-                }
+                if (Preset == PresetsEnum.Custom) CustomRoundaboutPriceMultiplier = value;
 
                 Mod.SchedulePriceRecalculation();
             }
@@ -118,10 +109,7 @@ namespace PriceAdjuster.Settings
             }
             set
             {
-                if (Preset == PresetsEnum.Custom)
-                {
-                    CustomTrainTrackPriceMultiplier = value;
-                }
+                if (Preset == PresetsEnum.Custom) CustomTrainTrackPriceMultiplier = value;
 
                 Mod.SchedulePriceRecalculation();
             }
@@ -144,10 +132,7 @@ namespace PriceAdjuster.Settings
             }
             set
             {
-                if (Preset == PresetsEnum.Custom)
-                {
-                    CustomTramTrackPriceMultiplier = value;
-                }
+                if (Preset == PresetsEnum.Custom) CustomTramTrackPriceMultiplier = value;
 
                 Mod.SchedulePriceRecalculation();
             }
@@ -170,16 +155,16 @@ namespace PriceAdjuster.Settings
             }
             set
             {
-                if (Preset == PresetsEnum.Custom)
-                {
-                    CustomSubwayTrackPriceMultiplier = value;
-                }
+                if (Preset == PresetsEnum.Custom) CustomSubwayTrackPriceMultiplier = value;
 
                 Mod.SchedulePriceRecalculation();
             }
         }
 
-        private bool IsNotCustomPreset() => Preset != PresetsEnum.Custom;
+        private bool IsNotCustomPreset()
+        {
+            return Preset != PresetsEnum.Custom;
+        }
 
         private void ResetPrices()
         {

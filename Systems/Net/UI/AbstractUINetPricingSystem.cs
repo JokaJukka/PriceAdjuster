@@ -80,6 +80,9 @@ namespace PriceAdjuster.Systems.Net.UI
             return entityData;
         }
 
-        public override int GetUpdateInterval(SystemUpdatePhase phase) => 256;
+        public override int GetUpdateInterval(SystemUpdatePhase phase)
+        {
+            return 256;
+        }
     }
 }

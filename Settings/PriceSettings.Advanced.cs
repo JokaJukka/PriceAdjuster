@@ -6,7 +6,7 @@ namespace PriceAdjuster.Settings
     {
         [SettingsUISection(AdvancedTab, DebugGroup)]
         [SettingsUIButton]
-        [SettingsUIConfirmation()]
+        [SettingsUIConfirmation]
         public bool ForceRecalculatePrices
         {
             get => false;
