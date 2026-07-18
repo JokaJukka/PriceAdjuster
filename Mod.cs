@@ -7,6 +7,7 @@ using Game.UI;
 using PriceAdjuster.Components;
 using PriceAdjuster.Locale;
 using PriceAdjuster.Settings;
+using PriceAdjuster.Systems;
 using PriceAdjuster.Systems.Net.Logic;
 using PriceAdjuster.Systems.Net.UI;
 using PriceAdjuster.Systems.Prefab;
@@ -36,6 +37,9 @@ namespace PriceAdjuster
             GameManager.instance.localizationManager.AddSource("en-US", new LocaleEN(Settings));
 
             AssetDatabase.global.LoadSettings(nameof(PriceAdjuster), Settings);
+
+            // Welcome popup
+            updateSystem.UpdateAt<WelcomePopupSystem>(SystemUpdatePhase.Modification1);
 
             // Prefab updates
             updateSystem.UpdateAt<NetObjectPricingSystem>(SystemUpdatePhase.Modification1);

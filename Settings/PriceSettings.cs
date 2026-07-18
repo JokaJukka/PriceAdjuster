@@ -19,6 +19,8 @@ namespace PriceAdjuster.Settings
         public const string TrackTypeGroup = "Track settings";
         public const string DebugGroup = "Debug";
 
+        [SettingsUIHidden] public bool HasSeenWelcome { get; set; } = false;
+
         public PriceSettings(IMod mod) : base(mod)
         {
         }

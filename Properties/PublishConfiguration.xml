@@ -57,6 +57,8 @@ Kudos to [u/dorin21](https://www.reddit.com/user/dorin21/) for sourcing a [resou
     <ChangeLog>
         <!-- @formatter:off -->
 - add support for pricing roundabouts &amp; cul-de-sacs
+- add welcome dialog when first booting up the mod for quick start
+- fix incorrect price shown in UI for pre-made intersections
         <!-- @formatter:on -->
     </ChangeLog>
     <!--External link, can be set multiple times. supported types are "discord", "github", "youtube", "twitch", "x", "paypal", "patreon", "buymeacoffee", "kofi", "crowdin", "gitlab", "gofundme"-->

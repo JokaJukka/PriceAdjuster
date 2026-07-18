@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Colossal;
 using PriceAdjuster.Settings;
+using PriceAdjuster.Systems;
 
 namespace PriceAdjuster.Locale
 {
@@ -19,7 +20,7 @@ namespace PriceAdjuster.Locale
             return new Dictionary<string, string>
             {
                 // Tabs & Groups
-                { _settings.GetSettingsLocaleID(), "PriceAdjuster" },
+                { _settings.GetSettingsLocaleID(), "Price Adjuster" },
                 { _settings.GetOptionTabLocaleID(PriceSettings.PricesTab), "Prices" },
                 { _settings.GetOptionTabLocaleID(PriceSettings.UpkeepTab), "Upkeep" },
                 {
@@ -149,7 +150,17 @@ namespace PriceAdjuster.Locale
                 {
                     _settings.GetOptionWarningLocaleID(nameof(PriceSettings.ForceRecalculatePrices)),
                     "Do you want to force recalculate all prices?"
-                }
+                },
+
+                // Welcome dialog
+                { WelcomePopupSystem.PopupTitleKey, "Welcome to PriceAdjuster!" },
+                {
+                    WelcomePopupSystem.PopupMessageKey,
+                    "This mod allows you to adjust prices of various construction prices. What preset do you want to use?\n You can always customize it in the game's settings."
+                },
+                { WelcomePopupSystem.PopupApplyBalancedKey, "Apply the \"Balanced\" preset" },
+                { WelcomePopupSystem.PopupApplyRealisticKey, "Apply the \"Realistic\" preset" },
+                { WelcomePopupSystem.PopupKeepVanillaKey, "Keep the base game settings" }
             };
         }
 
