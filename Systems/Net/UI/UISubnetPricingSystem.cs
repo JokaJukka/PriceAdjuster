@@ -110,8 +110,8 @@ namespace PriceAdjuster.Systems.Net.UI
 
             Mod.log.Info($"Calculating subnet price from {subNetBuffer.Length} elements");
 
-            float weightedCoefficientSum = 0f;
-            float totalLength = 0f;
+            var weightedCoefficientSum = 0f;
+            var totalLength = 0f;
 
             for (var i = 0; i < subNetBuffer.Length; i++)
             {
