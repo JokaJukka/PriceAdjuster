@@ -6,13 +6,13 @@ namespace PriceAdjuster.Systems.Logic
 {
     public partial class RoadPricingSystem : AbstractNetPricingSystem<RoadComposition>
     {
-        private ComponentLookup<Game.Prefabs.PlaceableNetData> _placeableNetDataLookup;
+        private ComponentLookup<PlaceableNetData> _placeableNetDataLookup;
 
         protected override void OnCreate()
         {
             base.OnCreate();
 
-            _placeableNetDataLookup = GetComponentLookup<Game.Prefabs.PlaceableNetData>(isReadOnly: true);
+            _placeableNetDataLookup = GetComponentLookup<PlaceableNetData>(isReadOnly: true);
 
             InitialQuery = GetEntityQuery(new EntityQueryDesc
             {
