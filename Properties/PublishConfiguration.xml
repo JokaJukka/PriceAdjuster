@@ -38,9 +38,10 @@ Kudos to [u/dorin21](https://www.reddit.com/user/dorin21/) for sourcing a [resou
     <!--Thumbnail-->
     <Thumbnail Value="Properties/Thumbnail.png"/>
     <!--Screenshot, can be set multiple times-->
-    <Screenshot Value="Screenshots/Settings.jpg"/>
     <Screenshot Value="Screenshots/UI.jpg"/>
     <Screenshot Value="Screenshots/Building.jpg"/>
+    <Screenshot Value="Screenshots/PricesSettings.jpg"/>
+    <Screenshot Value="Screenshots/UpkeepSettings.jpg"/>
     <!--Tag, can be set multiple times-->
     <Tag Value="Code Mod"/>
     <!--Link to the forum post where the mod can be discussed-->
