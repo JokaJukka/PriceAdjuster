@@ -44,12 +44,12 @@ namespace PriceAdjuster
             updateSystem.UpdateAt<RoadPricingSystem>(SystemUpdatePhase.Modification1);
             updateSystem.UpdateAt<TrackPricingSystem>(SystemUpdatePhase.Modification1);
 
-            // Interchange pricing (must be after net logic systems to use adjusted PlaceableNetComposition)
-            // updateSystem.UpdateAt<InterchangePricingSystem>(SystemUpdatePhase.Modification2);
-
             // Net UI updates
             updateSystem.UpdateAt<UIRoadPricingSystem>(SystemUpdatePhase.Modification1);
             updateSystem.UpdateAt<UITrackPricingSystem>(SystemUpdatePhase.Modification1);
+
+            // Interchange UI updates (must be after net logic systems to use adjusted PlaceableNetComposition)
+            updateSystem.UpdateAt<UISubnetPricingSystem>(SystemUpdatePhase.Modification2);
         }
 
         public void OnDispose()

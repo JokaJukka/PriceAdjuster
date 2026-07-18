@@ -8,9 +8,13 @@ using Unity.Entities;
 using Unity.Mathematics;
 using SubNet = Game.Prefabs.SubNet;
 
-namespace PriceAdjuster.Systems.Prefab
+namespace PriceAdjuster.Systems.Net.UI
 {
-    public partial class InterchangePricingSystem : GameSystemBase
+    /// <summary>
+    /// This system is an odd one out - it handles primarily recalculating prices of pre-made interchanges
+    /// in the UI. 
+    /// </summary>
+    public partial class UISubnetPricingSystem : GameSystemBase
     {
         private EntityQuery _initialQuery;
         private EntityQuery _recalcQuery;
@@ -31,7 +35,11 @@ namespace PriceAdjuster.Systems.Prefab
                     ComponentType.ReadWrite<PlaceableObjectData>(),
                     ComponentType.ReadOnly<SubNet>()
                 },
-                None = new[] { ComponentType.ReadOnly<OriginalPlaceableNetProps>() }
+                None = new[]
+                {
+                    ComponentType.ReadOnly<OriginalPlaceableNetProps>(),
+                    ComponentType.ReadOnly<BuildingData>()
+                }
             });
 
             _recalcQuery = GetEntityQuery(new EntityQueryDesc
@@ -41,6 +49,10 @@ namespace PriceAdjuster.Systems.Prefab
                     ComponentType.ReadWrite<PlaceableObjectData>(),
                     ComponentType.ReadOnly<SubNet>(),
                     ComponentType.ReadWrite<ScheduledPriceRecalculation>()
+                },
+                None = new[]
+                {
+                    ComponentType.ReadOnly<BuildingData>()
                 }
             });
 
@@ -70,14 +82,14 @@ namespace PriceAdjuster.Systems.Prefab
                 }
 
                 var newCost = CalculateInterchangeCost(entity);
+                Mod.log.Debug($"Interchange price: {objectData.m_ConstructionCost} -> {newCost}");
+
                 objectData.m_ConstructionCost = MathUtils.ClampToUInt(newCost);
 
                 if (!initialize)
                     EntityManager.RemoveComponent<ScheduledPriceRecalculation>(entity);
 
                 EntityManager.SetComponentData(entity, objectData);
-
-                Mod.log.Debug($"Interchange price: {objectData.m_ConstructionCost} -> {newCost}");
             }
 
             entities.Dispose();
