@@ -63,6 +63,22 @@ namespace PriceAdjuster.Locale
                     "Sets the multiplier of a price of building highways. 1 equals to vanilla game settings."
                 },
                 {
+                    _settings.GetOptionLabelLocaleID(nameof(PriceSettings.RoundaboutPriceMultiplier)),
+                    "Roundabout price multiplier"
+                },
+                {
+                    _settings.GetOptionDescLocaleID(nameof(PriceSettings.RoundaboutPriceMultiplier)),
+                    "Sets the multiplier of a price of building roundabouts. 1 equals to vanilla game settings."
+                },
+                {
+                    _settings.GetOptionLabelLocaleID(nameof(PriceSettings.CulDeSacPriceMultiplier)),
+                    "Cul-de-sac price multiplier"
+                },
+                {
+                    _settings.GetOptionDescLocaleID(nameof(PriceSettings.CulDeSacPriceMultiplier)),
+                    "Sets the multiplier of a price of building cul-de-sacs. 1 equals to vanilla game settings."
+                },
+                {
                     _settings.GetOptionLabelLocaleID(nameof(PriceSettings.TrainTrackPriceMultiplier)),
                     "Train track price multiplier"
                 },
@@ -103,6 +119,22 @@ namespace PriceAdjuster.Locale
                 {
                     _settings.GetOptionDescLocaleID(nameof(PriceSettings.HighwayUpkeepMultiplier)),
                     "Sets the multiplier of a price of maintaining highways. 1 equals to vanilla game settings."
+                },
+                {
+                    _settings.GetOptionLabelLocaleID(nameof(PriceSettings.RoundaboutUpkeepMultiplier)),
+                    "Roundabout upkeep multiplier"
+                },
+                {
+                    _settings.GetOptionDescLocaleID(nameof(PriceSettings.RoundaboutUpkeepMultiplier)),
+                    "Sets the multiplier of a price of maintaining roundabouts. 1 equals to vanilla game settings."
+                },
+                {
+                    _settings.GetOptionLabelLocaleID(nameof(PriceSettings.CulDeSacUpkeepMultiplier)),
+                    "Cul-de-sac upkeep multiplier"
+                },
+                {
+                    _settings.GetOptionDescLocaleID(nameof(PriceSettings.CulDeSacUpkeepMultiplier)),
+                    "Sets the multiplier of a price of maintaining cul-de-sacs. 1 equals to vanilla game settings."
                 },
                 {
                     _settings.GetOptionLabelLocaleID(nameof(PriceSettings.TrainTrackUpkeepMultiplier)),

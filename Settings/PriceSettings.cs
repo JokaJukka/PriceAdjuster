@@ -6,7 +6,7 @@ namespace PriceAdjuster.Settings
 {
     [FileLocation("ModsSettings/PriceAdjuster/PriceAdjuster")]
     [SettingsUITabOrder(PricesTab, UpkeepTab, AdvancedTab)]
-    [SettingsUIGroupOrder(PresetGroup, RoadTypeGroup, DebugGroup)]
+        [SettingsUIGroupOrder(PresetGroup, RoadTypeGroup, DebugGroup)]
     [SettingsUIShowGroupName]
     public sealed partial class PriceSettings : ModSetting
     {

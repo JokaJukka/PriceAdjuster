@@ -15,9 +15,9 @@ namespace PriceAdjuster.Systems.UI
         protected EntityQuery InitialQuery;
         protected EntityQuery RecalcQuery;
 
-        protected abstract float PriceCoefficient(T detailData);
+        protected abstract float PriceCoefficient(Entity entity, T detailData);
 
-        protected abstract float UpkeepCoefficient(T detailData);
+        protected abstract float UpkeepCoefficient(Entity entity, T detailData);
 
         protected override void OnUpdate()
         {
@@ -36,7 +36,7 @@ namespace PriceAdjuster.Systems.UI
                 var entityData = entitiesData[i];
                 var originalPrices = new OriginalPlaceableNetProps(entityData.m_DefaultConstructionCost,
                     entityData.m_DefaultUpkeepCost);
-                entityData = UpdatePrices(entitiesData[i], originalPrices, entitiesDetailData[i]);
+                entityData = UpdatePrices(entities[i], entitiesData[i], originalPrices, entitiesDetailData[i]);
 
                 EntityManager.AddComponentData(entities[i], originalPrices);
                 EntityManager.SetComponentData(entities[i], entityData);
@@ -55,7 +55,7 @@ namespace PriceAdjuster.Systems.UI
 
             for (var i = 0; i < entitiesData.Length; i++)
             {
-                var entityData = UpdatePrices(entitiesData[i], entitiesOriginalPrices[i], entitiesDetailData[i]);
+                var entityData = UpdatePrices(entities[i], entitiesData[i], entitiesOriginalPrices[i], entitiesDetailData[i]);
 
                 EntityManager.RemoveComponent<ScheduledPriceRecalculation>(entities[i]);
                 EntityManager.SetComponentData(entities[i], entityData);
@@ -65,13 +65,13 @@ namespace PriceAdjuster.Systems.UI
             entitiesData.Dispose();
         }
 
-        private PlaceableNetData UpdatePrices(PlaceableNetData entityData,
+        private PlaceableNetData UpdatePrices(Entity entity, PlaceableNetData entityData,
             OriginalPlaceableNetProps originalPlaceableValues, T detailData)
         {
-            var newPrice = originalPlaceableValues.OriginalPrice * PriceCoefficient(detailData);
+            var newPrice = originalPlaceableValues.OriginalPrice * PriceCoefficient(entity, detailData);
             entityData.m_DefaultConstructionCost = MathUtils.ClampToUInt(newPrice);
 
-            var newUpkeep = originalPlaceableValues.OriginalUpkeep * UpkeepCoefficient(detailData);
+            var newUpkeep = originalPlaceableValues.OriginalUpkeep * UpkeepCoefficient(entity, detailData);
             entityData.m_DefaultUpkeepCost = newUpkeep;
 
             Mod.log.Debug(

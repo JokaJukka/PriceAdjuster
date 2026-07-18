@@ -35,7 +35,7 @@ namespace PriceAdjuster.Systems.Logic
             RequireAnyForUpdate(InitialQuery, RecalcQuery);
         }
 
-        protected override float PriceCoefficient(TrackComposition detailData)
+        protected override float PriceCoefficient(Entity entity, TrackComposition detailData)
         {
             return detailData.m_TrackType switch
             {
@@ -46,7 +46,7 @@ namespace PriceAdjuster.Systems.Logic
             };
         }
 
-        protected override float UpkeepCoefficient(TrackComposition detailData)
+        protected override float UpkeepCoefficient(Entity entity, TrackComposition detailData)
         {
             return detailData.m_TrackType switch
             {
