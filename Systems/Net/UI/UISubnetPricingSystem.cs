@@ -1,10 +1,10 @@
+using Colossal.Mathematics;
 using Game;
 using Game.Prefabs;
 using PriceAdjuster.Components;
-using PriceAdjuster.Utils;
 using Unity.Collections;
 using Unity.Entities;
-using Unity.Mathematics;
+using UnityEngine;
 using SubNet = Game.Prefabs.SubNet;
 
 namespace PriceAdjuster.Systems.Net.UI
@@ -88,7 +88,7 @@ namespace PriceAdjuster.Systems.Net.UI
                 var newCost = CalculateInterchangeCost(entity, originalCost);
                 Mod.log.Debug($"Interchange price: {originalCost} -> {newCost}");
 
-                objectData.m_ConstructionCost = MathUtils.ClampToUInt(newCost);
+                objectData.m_ConstructionCost = (uint)Mathf.Clamp(newCost, 0, uint.MaxValue);
 
                 if (!initialize)
                     EntityManager.RemoveComponent<ScheduledPriceRecalculation>(entity);
@@ -107,6 +107,7 @@ namespace PriceAdjuster.Systems.Net.UI
                 Mod.log.Warn("Failed to get subnet buffer!");
                 return originalCost;
             }
+
             Mod.log.Info($"Calculating subnet price from {subNetBuffer.Length} elements");
 
             float weightedCoefficientSum = 0f;
@@ -115,7 +116,7 @@ namespace PriceAdjuster.Systems.Net.UI
             for (var i = 0; i < subNetBuffer.Length; i++)
             {
                 var subNet = subNetBuffer[i];
-                var length = Colossal.Mathematics.MathUtils.Length(subNet.m_Curve);
+                var length = MathUtils.Length(subNet.m_Curve);
 
                 var coefficient = GetSubNetCoefficient(subNet.m_Prefab);
 
@@ -129,7 +130,7 @@ namespace PriceAdjuster.Systems.Net.UI
             var weightedCoefficient = weightedCoefficientSum / totalLength;
             Mod.log.Debug($"Interchange coefficient: {weightedCoefficient:F2}");
 
-            return MathUtils.ClampToUInt(originalCost * weightedCoefficient);
+            return (uint)Mathf.Clamp(originalCost * weightedCoefficient, 0, uint.MaxValue);
         }
 
         private float GetSubNetCoefficient(Entity prefabEntity)

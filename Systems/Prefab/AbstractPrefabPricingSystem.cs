@@ -1,9 +1,9 @@
 using Game;
 using Game.Prefabs;
 using PriceAdjuster.Components;
-using PriceAdjuster.Utils;
 using Unity.Collections;
 using Unity.Entities;
+using UnityEngine;
 
 namespace PriceAdjuster.Systems.Prefab
 {
@@ -66,7 +66,7 @@ namespace PriceAdjuster.Systems.Prefab
             OriginalPlaceableNetProps originalPlaceableValues, T detailData)
         {
             var newPrice = originalPlaceableValues.OriginalPrice * PriceCoefficient(entityData, detailData);
-            entityData.m_ConstructionCost = MathUtils.ClampToUInt(newPrice);
+            entityData.m_ConstructionCost = (uint)Mathf.Clamp(newPrice, 0, uint.MaxValue);
 
             Mod.log.Debug($"Price: {originalPlaceableValues.OriginalPrice} -> {newPrice}");
 
