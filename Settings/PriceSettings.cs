@@ -32,7 +32,6 @@ namespace PriceAdjuster.Settings
         public override void Apply()
         {
             base.Apply();
-            Mod.log.Warn("apply!");
             Mod.SchedulePriceRecalculation();
         }
 
