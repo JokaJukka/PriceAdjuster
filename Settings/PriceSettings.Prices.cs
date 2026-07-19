@@ -13,12 +13,12 @@ namespace PriceAdjuster.Settings
             Custom
         }
 
-        [SettingsUIHidden] public float CustomRoadPriceMultiplier { get; set; } = 1f;
-        [SettingsUIHidden] public float CustomHighwayPriceMultiplier { get; set; } = 1f;
-        [SettingsUIHidden] public float CustomRoundaboutPriceMultiplier { get; set; } = 1f;
-        [SettingsUIHidden] public float CustomTrainTrackPriceMultiplier { get; set; } = 1f;
-        [SettingsUIHidden] public float CustomTramTrackPriceMultiplier { get; set; } = 1f;
-        [SettingsUIHidden] public float CustomSubwayTrackPriceMultiplier { get; set; } = 1f;
+        [SettingsUIHidden] public float CustomRoadPriceMultiplier = 1f;
+        [SettingsUIHidden] public float CustomHighwayPriceMultiplier = 1f;
+        [SettingsUIHidden] public float CustomRoundaboutPriceMultiplier = 1f;
+        [SettingsUIHidden] public float CustomTrainTrackPriceMultiplier = 1f;
+        [SettingsUIHidden] public float CustomTramTrackPriceMultiplier = 1f;
+        [SettingsUIHidden] public float CustomSubwayTrackPriceMultiplier = 1f;
 
         [SettingsUISection(PricesTab, PresetGroup)]
         public PresetsEnum Preset { get; set; }
@@ -38,12 +38,7 @@ namespace PriceAdjuster.Settings
                     _ => CustomRoadPriceMultiplier
                 };
             }
-            set
-            {
-                if (Preset == PresetsEnum.Custom) CustomRoadPriceMultiplier = value;
-
-                Mod.SchedulePriceRecalculation();
-            }
+            set => CustomRoadPriceMultiplier = value;
         }
 
         [SettingsUISlider(min = 0.5f, max = 20f, step = 0.25f, unit = Unit.kFloatTwoFractions)]
@@ -61,12 +56,7 @@ namespace PriceAdjuster.Settings
                     _ => CustomHighwayPriceMultiplier
                 };
             }
-            set
-            {
-                if (Preset == PresetsEnum.Custom) CustomHighwayPriceMultiplier = value;
-
-                Mod.SchedulePriceRecalculation();
-            }
+            set => CustomHighwayPriceMultiplier = value;
         }
 
         [SettingsUISlider(min = 0.5f, max = 20f, step = 0.25f, unit = Unit.kFloatTwoFractions)]
@@ -84,12 +74,7 @@ namespace PriceAdjuster.Settings
                     _ => CustomRoundaboutPriceMultiplier
                 };
             }
-            set
-            {
-                if (Preset == PresetsEnum.Custom) CustomRoundaboutPriceMultiplier = value;
-
-                Mod.SchedulePriceRecalculation();
-            }
+            set => CustomRoundaboutPriceMultiplier = value;
         }
 
         [SettingsUISlider(min = 0.5f, max = 20f, step = 0.25f, unit = Unit.kFloatTwoFractions)]
@@ -107,12 +92,7 @@ namespace PriceAdjuster.Settings
                     _ => CustomTrainTrackPriceMultiplier
                 };
             }
-            set
-            {
-                if (Preset == PresetsEnum.Custom) CustomTrainTrackPriceMultiplier = value;
-
-                Mod.SchedulePriceRecalculation();
-            }
+            set => CustomTrainTrackPriceMultiplier = value;
         }
 
         [SettingsUISlider(min = 0.5f, max = 20f, step = 0.25f, unit = Unit.kFloatTwoFractions)]
@@ -130,12 +110,7 @@ namespace PriceAdjuster.Settings
                     _ => CustomTramTrackPriceMultiplier
                 };
             }
-            set
-            {
-                if (Preset == PresetsEnum.Custom) CustomTramTrackPriceMultiplier = value;
-
-                Mod.SchedulePriceRecalculation();
-            }
+            set => CustomTramTrackPriceMultiplier = value;
         }
 
         [SettingsUISlider(min = 0.5f, max = 20f, step = 0.25f, unit = Unit.kFloatTwoFractions)]
@@ -153,12 +128,7 @@ namespace PriceAdjuster.Settings
                     _ => CustomSubwayTrackPriceMultiplier
                 };
             }
-            set
-            {
-                if (Preset == PresetsEnum.Custom) CustomSubwayTrackPriceMultiplier = value;
-
-                Mod.SchedulePriceRecalculation();
-            }
+            set => CustomSubwayTrackPriceMultiplier = value;
         }
 
         private bool IsNotCustomPreset()

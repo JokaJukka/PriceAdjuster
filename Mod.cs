@@ -23,6 +23,8 @@ namespace PriceAdjuster
 
         private static EntityManager _entityManager;
 
+        private static float _lastRecalculationTime = 0f;
+
         public static PriceSettings Settings { get; private set; }
 
         public void OnLoad(UpdateSystem updateSystem)
@@ -68,6 +70,10 @@ namespace PriceAdjuster
 
         public static void SchedulePriceRecalculation()
         {
+            var now = UnityEngine.Time.unscaledTime;
+            if (now - _lastRecalculationTime < 1f) return;
+            _lastRecalculationTime = now;
+            
             var query = _entityManager.CreateEntityQuery(ComponentType.ReadOnly<OriginalPlaceableNetProps>());
             var entities = query.ToEntityArray(Allocator.Temp);
 

@@ -23,6 +23,17 @@ namespace PriceAdjuster.Settings
 
         public PriceSettings(IMod mod) : base(mod)
         {
+            onSettingsApplied += setting =>
+            {
+                Mod.log.Warn(setting);
+            };
+        }
+
+        public override void Apply()
+        {
+            base.Apply();
+            Mod.log.Warn("apply!");
+            Mod.SchedulePriceRecalculation();
         }
 
         public override void SetDefaults()

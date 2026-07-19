@@ -82,7 +82,7 @@ namespace PriceAdjuster.Systems.Net.Logic
 
         public override int GetUpdateInterval(SystemUpdatePhase phase)
         {
-            return 256;
+            return 2048;
         }
     }
 }
