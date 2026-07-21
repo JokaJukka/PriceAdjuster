@@ -3,16 +3,13 @@ using Colossal.Logging;
 using Game;
 using Game.Modding;
 using Game.SceneFlow;
-using Game.UI;
-using PriceAdjuster.Components;
 using PriceAdjuster.Locale;
 using PriceAdjuster.Settings;
 using PriceAdjuster.Systems;
 using PriceAdjuster.Systems.Net.Logic;
 using PriceAdjuster.Systems.Net.UI;
 using PriceAdjuster.Systems.Prefab;
-using Unity.Collections;
-using Unity.Entities;
+using UnityEngine;
 
 namespace PriceAdjuster
 {
@@ -21,9 +18,7 @@ namespace PriceAdjuster
         public static ILog log = LogManager.GetLogger($"{nameof(PriceAdjuster)}.{nameof(Mod)}")
             .SetShowsErrorsInUI(false);
 
-        private static EntityManager _entityManager;
-
-        private static float _lastRecalculationTime = 0f;
+        public static float ScheduledRecalculationTime { get; private set; } = -1f;
 
         public static PriceSettings Settings { get; private set; }
 
@@ -31,8 +26,6 @@ namespace PriceAdjuster
         {
             if (GameManager.instance.modManager.TryGetExecutableAsset(this, out var asset))
                 log.Info($"Current mod asset at {asset.path}");
-
-            _entityManager = updateSystem.EntityManager;
 
             Settings = new PriceSettings(this);
             Settings.RegisterInOptionsUI();
@@ -56,6 +49,9 @@ namespace PriceAdjuster
 
             // Interchange UI updates (must be after net logic systems to use adjusted PlaceableNetComposition)
             updateSystem.UpdateAt<UISubnetPricingSystem>(SystemUpdatePhase.Modification2);
+
+            // Scheduler for debounced price recalculations
+            updateSystem.UpdateAt<RecalculationSchedulerSystem>(SystemUpdatePhase.Modification1);
         }
 
         public void OnDispose()
@@ -70,19 +66,8 @@ namespace PriceAdjuster
 
         public static void SchedulePriceRecalculation()
         {
-            var now = UnityEngine.Time.unscaledTime;
-            if (now - _lastRecalculationTime < 1f) return;
-            _lastRecalculationTime = now;
-            
-            var query = _entityManager.CreateEntityQuery(ComponentType.ReadOnly<OriginalPlaceableNetProps>());
-            var entities = query.ToEntityArray(Allocator.Temp);
-
-            if (entities.Length > 0)
-                log.Info($"Scheduling price recalculation for {entities.Length} entities!");
-
-            foreach (var entity in entities) _entityManager.AddComponent<ScheduledPriceRecalculation>(entity);
-
-            entities.Dispose();
+            ScheduledRecalculationTime = Time.unscaledTime + 1f;
+            log.Debug($"Scheduled recalc at time {ScheduledRecalculationTime}");
         }
     }
 }
