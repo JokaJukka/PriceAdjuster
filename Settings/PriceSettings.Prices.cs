@@ -23,7 +23,7 @@ namespace PriceAdjuster.Settings
         [SettingsUISection(PricesTab, PresetGroup)]
         public PresetsEnum Preset { get; set; }
 
-        [SettingsUISlider(min = 0.5f, max = 20f, step = 0.25f, unit = Unit.kFloatTwoFractions)]
+        [SettingsUISlider(min = 0.5f, max = 25f, step = 0.5f, unit = Unit.kFloatTwoFractions)]
         [SettingsUISection(PricesTab, RoadTypeGroup)]
         [SettingsUIDisableByCondition(typeof(PriceSettings), nameof(IsNotCustomPreset))]
         public float RoadPriceMultiplier
@@ -41,7 +41,7 @@ namespace PriceAdjuster.Settings
             set => CustomRoadPriceMultiplier = value;
         }
 
-        [SettingsUISlider(min = 0.5f, max = 20f, step = 0.25f, unit = Unit.kFloatTwoFractions)]
+        [SettingsUISlider(min = 0.5f, max = 25f, step = 0.5f, unit = Unit.kFloatTwoFractions)]
         [SettingsUISection(PricesTab, RoadTypeGroup)]
         [SettingsUIDisableByCondition(typeof(PriceSettings), nameof(IsNotCustomPreset))]
         public float HighwayPriceMultiplier
@@ -59,7 +59,7 @@ namespace PriceAdjuster.Settings
             set => CustomHighwayPriceMultiplier = value;
         }
 
-        [SettingsUISlider(min = 0.5f, max = 20f, step = 0.25f, unit = Unit.kFloatTwoFractions)]
+        [SettingsUISlider(min = 0.5f, max = 25f, step = 0.5f, unit = Unit.kFloatTwoFractions)]
         [SettingsUISection(PricesTab, RoadTypeGroup)]
         [SettingsUIDisableByCondition(typeof(PriceSettings), nameof(IsNotCustomPreset))]
         public float RoundaboutPriceMultiplier
@@ -77,7 +77,7 @@ namespace PriceAdjuster.Settings
             set => CustomRoundaboutPriceMultiplier = value;
         }
 
-        [SettingsUISlider(min = 0.5f, max = 20f, step = 0.25f, unit = Unit.kFloatTwoFractions)]
+        [SettingsUISlider(min = 0.5f, max = 25f, step = 0.5f, unit = Unit.kFloatTwoFractions)]
         [SettingsUISection(PricesTab, TrackTypeGroup)]
         [SettingsUIDisableByCondition(typeof(PriceSettings), nameof(IsNotCustomPreset))]
         public float TrainTrackPriceMultiplier
@@ -95,7 +95,7 @@ namespace PriceAdjuster.Settings
             set => CustomTrainTrackPriceMultiplier = value;
         }
 
-        [SettingsUISlider(min = 0.5f, max = 20f, step = 0.25f, unit = Unit.kFloatTwoFractions)]
+        [SettingsUISlider(min = 0.5f, max = 25f, step = 0.5f, unit = Unit.kFloatTwoFractions)]
         [SettingsUISection(PricesTab, TrackTypeGroup)]
         [SettingsUIDisableByCondition(typeof(PriceSettings), nameof(IsNotCustomPreset))]
         public float TramTrackPriceMultiplier
@@ -113,7 +113,7 @@ namespace PriceAdjuster.Settings
             set => CustomTramTrackPriceMultiplier = value;
         }
 
-        [SettingsUISlider(min = 0.5f, max = 20f, step = 0.25f, unit = Unit.kFloatTwoFractions)]
+        [SettingsUISlider(min = 0.5f, max = 25f, step = 0.5f, unit = Unit.kFloatTwoFractions)]
         [SettingsUISection(PricesTab, TrackTypeGroup)]
         [SettingsUIDisableByCondition(typeof(PriceSettings), nameof(IsNotCustomPreset))]
         public float SubwayTrackPriceMultiplier
