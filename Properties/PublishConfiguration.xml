@@ -47,7 +47,7 @@ Kudos to [u/dorin21](https://www.reddit.com/user/dorin21/) for sourcing a [resou
     <!--Link to the forum post where the mod can be discussed-->
     <ForumLink Value=""/>
     <!--Version of the mod-->
-    <ModVersion Value="0.4.1"/>
+    <ModVersion Value="0.4.2"/>
     <!--Recommended version of the base game to use the mod-->
     <GameVersion Value="1.6.*"/>
     <!--Dependency for the mod, can be set multiple times-->
@@ -57,7 +57,9 @@ Kudos to [u/dorin21](https://www.reddit.com/user/dorin21/) for sourcing a [resou
     <!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
     <ChangeLog>
         <!-- @formatter:off -->
-- fix prices not being recalculating after change in mods' settings
+- proper fix for recalculation of prices after change in mods' settings
+- adjust step &amp; max values of pricing sliders
+- add "Reset custom prices" button to settings
         <!-- @formatter:on -->
     </ChangeLog>
     <!--External link, can be set multiple times. supported types are "discord", "github", "youtube", "twitch", "x", "paypal", "patreon", "buymeacoffee", "kofi", "crowdin", "gitlab", "gofundme"-->
