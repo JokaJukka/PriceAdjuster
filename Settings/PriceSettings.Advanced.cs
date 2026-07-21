@@ -4,10 +4,10 @@ namespace PriceAdjuster.Settings
 {
     public sealed partial class PriceSettings
     {
-        [SettingsUISection(AdvancedTab, DebugGroup)]
+        [SettingsUISection(AdvancedTab, MiscGroup)]
         [SettingsUIButton]
         [SettingsUIConfirmation]
-        public bool ForceRecalculatePrices
+        public bool ForceRecalculatePricesButton
         {
             get => false;
             set

@@ -31,7 +31,7 @@ namespace PriceAdjuster.Locale
                 { _settings.GetOptionGroupLocaleID(PriceSettings.PresetGroup), "Presets" },
                 { _settings.GetOptionGroupLocaleID(PriceSettings.RoadTypeGroup), "Road settings" },
                 { _settings.GetOptionGroupLocaleID(PriceSettings.TrackTypeGroup), "Track settings" },
-                { _settings.GetOptionGroupLocaleID(PriceSettings.DebugGroup), "Debug" },
+                { _settings.GetOptionGroupLocaleID(PriceSettings.MiscGroup), "Misc" },
 
                 // Prices tab
                 { _settings.GetOptionLabelLocaleID(nameof(PriceSettings.Preset)), "Preset" },
@@ -95,6 +95,18 @@ namespace PriceAdjuster.Locale
                     _settings.GetOptionDescLocaleID(nameof(PriceSettings.SubwayTrackPriceMultiplier)),
                     "Sets the multiplier of a price of building subway tracks. 1 equals to vanilla game settings."
                 },
+                {
+                    _settings.GetOptionLabelLocaleID(nameof(PriceSettings.ResetCustomPricesButton)),
+                    "Reset custom prices"
+                },
+                {
+                    _settings.GetOptionDescLocaleID(nameof(PriceSettings.ResetCustomPricesButton)),
+                    "Resets the custom prices back to default vanilla settings."
+                },
+                {
+                    _settings.GetOptionWarningLocaleID(nameof(PriceSettings.ResetCustomPricesButton)),
+                    "Do you want to reset custom prices back to vanilla values? This cannot be undone."
+                },
 
                 // Upkeep tab
                 {
@@ -140,15 +152,15 @@ namespace PriceAdjuster.Locale
 
                 // Advanced tab
                 {
-                    _settings.GetOptionLabelLocaleID(nameof(PriceSettings.ForceRecalculatePrices)),
+                    _settings.GetOptionLabelLocaleID(nameof(PriceSettings.ForceRecalculatePricesButton)),
                     "Force recalculate all prices"
                 },
                 {
-                    _settings.GetOptionDescLocaleID(nameof(PriceSettings.ForceRecalculatePrices)),
+                    _settings.GetOptionDescLocaleID(nameof(PriceSettings.ForceRecalculatePricesButton)),
                     "Forces the mod to recalculate all the modified prices; this shouldn't be necessary though."
                 },
                 {
-                    _settings.GetOptionWarningLocaleID(nameof(PriceSettings.ForceRecalculatePrices)),
+                    _settings.GetOptionWarningLocaleID(nameof(PriceSettings.ForceRecalculatePricesButton)),
                     "Do you want to force recalculate all prices?"
                 },
 

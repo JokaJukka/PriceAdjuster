@@ -130,6 +130,19 @@ namespace PriceAdjuster.Settings
             }
             set => CustomSubwayTrackPriceMultiplier = value;
         }
+        
+        [SettingsUISection(PricesTab, MiscGroup)]
+        [SettingsUIButton]
+        [SettingsUIConfirmation]
+        [SettingsUIDisableByCondition(typeof(PriceSettings), nameof(IsNotCustomPreset))]
+        public bool ResetCustomPricesButton
+        {
+            get => false;
+            set
+            {
+                if (value) ResetCustomPrices();
+            }
+        }
 
         private bool IsNotCustomPreset()
         {
@@ -139,6 +152,10 @@ namespace PriceAdjuster.Settings
         private void ResetPrices()
         {
             Preset = PresetsEnum.Vanilla;
+        }
+
+        private void ResetCustomPrices()
+        {
             CustomRoadPriceMultiplier = 1f;
             CustomHighwayPriceMultiplier = 1f;
             CustomRoundaboutPriceMultiplier = 1f;
